@@ -113,7 +113,7 @@ public class Gestante {
 		this.semanaGestacional = semanaGestacional;
 	}
 	
-	public boolean isIndCompartirUbicacion() {
+	public boolean getIsIndCompartirUbicacion() {
 		return indCompartirUbicacion;
 	}
 	

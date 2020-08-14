@@ -7,6 +7,7 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.3.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
+	
 	</parent>
 	<groupId>com.upc</groupId>
 	<artifactId>babyhealth</artifactId>
@@ -34,6 +35,18 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- Servicio RESTful  -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
@@ -54,7 +67,50 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- Conectar con cloud foundry -->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-cloudfoundry-connector</artifactId>
+			<version>2.0.7.RELEASE</version>
+			<scope>runtime</scope>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-spring-service-connector</artifactId>
+			<version>2.0.7.RELEASE</version>
+		</dependency>
+		
+		<!-- Conectar con HANA -->
+
+		<dependency>
+			<groupId>com.sap.hana.cloud</groupId>
+			<artifactId>spring-cloud-cloudfoundry-hana-service-connector</artifactId>
+			<version>1.0.4.RELEASE</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.sap.cloud.db.jdbc</groupId>
+			<artifactId>ngdbc</artifactId>
+			<version>2.5.50</version>
+		</dependency>
+		
 	</dependencies>
+	
+		<profiles>
+		<profile>
+			<id>cf</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+		        <activatedProperties>cf</activatedProperties>
+		    </properties>
+		    
+		</profile>
+		</profiles>
 
 	<build>
 		<plugins>
