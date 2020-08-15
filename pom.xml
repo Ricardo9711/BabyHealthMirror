@@ -13,6 +13,7 @@
 	<artifactId>babyhealth</artifactId>
 	<version>1.0-version</version>
 	<name>babyhealth</name>
+	<packaging>war</packaging>
 	<description>Primera versión de la aplicación babyhealth</description>
 
 	<properties>
@@ -69,14 +70,14 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-cloudfoundry-connector</artifactId>
-			<version>2.0.7.RELEASE</version>
+			<version>1.2.2.RELEASE</version>
 			<scope>runtime</scope>
 		</dependency>
 	
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-spring-service-connector</artifactId>
-			<version>2.0.7.RELEASE</version>
+			<version>1.2.2.RELEASE</version>
 		</dependency>
 		
 		<!-- Conectar con HANA -->
@@ -90,7 +91,7 @@
 		<dependency>
 			<groupId>com.sap.cloud.db.jdbc</groupId>
 			<artifactId>ngdbc</artifactId>
-			<version>2.5.50</version>
+			<version>2.3.55</version>
 		</dependency>
 		
 	</dependencies>

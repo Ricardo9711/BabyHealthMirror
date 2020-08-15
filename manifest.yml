@@ -1,11 +1,9 @@
   
 applications:
 - name: babyhealth
-  memory: 1536M
-  path: target/babyhealth-1.0-version.jar
+  memory: 1024M
+  path: target/babyhealth-1.0-version.war
   instances: 1
   services:
     - schemababyhealth
-  env:
-   SPRING_PROFILES_DEFAULT: cf  
-    
+  buildpack: java_buildpack
