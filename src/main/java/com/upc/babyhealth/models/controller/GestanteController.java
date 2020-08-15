@@ -26,6 +26,12 @@ public class GestanteController {
 		this.gestanteService = gestanteService;
 	}
 	
+	@GetMapping("/")
+	public String helloworld() {
+		return "Holis";
+	}
+	
+	
 	@GetMapping("/gestantes")
 	List<Gestante> all(){
 		return gestanteService.findAll();
