@@ -94,6 +94,14 @@
 			<version>2.3.55</version>
 		</dependency>
 		
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version><!--$NO-MVN-MAN-VER$-->
+			<scope>provided</scope>
+		</dependency>
+			
 	</dependencies>
 
 	<profiles>

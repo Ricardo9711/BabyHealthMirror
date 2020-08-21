@@ -1,16 +1,24 @@
 package com.upc.babyhealth.models.entity;
 
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Gestante {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	private String role;
@@ -166,7 +174,28 @@ public class Gestante {
 							",semanaGestacional='" + this.semanaGestacional + '\'' + 
 							",indCompartirUbicacion='" + this.indCompartirUbicacion + '\'' + '}';
 	}
+	
+	@OneToOne
+	@JoinColumn(name = "FK_USUARIO", updatable = false, nullable = false)
+	private Usuario usuario;
+	
+	
+	@ManyToOne(optional = false,fetch = FetchType.LAZY)
+	@JoinColumn(name="FK_OBSTETRA", nullable=false)
+	private Obstetra obstetra;
+	
+	
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="FK_CELULAR", nullable=false)
+	private List<Celular> celulares;
+	public void addCelular(Celular celular){
+		celulares.add(celular);
+	}
+	
+	@OneToMany(mappedBy="gestante",fetch=FetchType.LAZY)
+	private List<DispositivoGestante> dispositivos;
+	public void addDispositivo(DispositivoGestante dispositivo){
+		dispositivos.add(dispositivo);
+	}
 
-	
-	
 }
