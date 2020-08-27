@@ -38,6 +38,7 @@ public class Monitoreo {
 	private ZonedDateTime fechaModificacion;
 	private String usuarioCreacion;
 	private String usuarioModificacion;
+	private Integer semanaGestacion;
 	
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name="FK_GESTANTE", nullable=false)

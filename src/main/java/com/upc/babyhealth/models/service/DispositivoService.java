@@ -1,17 +1,13 @@
 package com.upc.babyhealth.models.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import com.upc.babyhealth.models.dao.DispositivoRepository;
+import com.upc.babyhealth.models.entity.Dispositivo;
 
-@Service
-public class DispositivoService implements IDispositivoService {
+public interface DispositivoService {
 	
-	@Autowired
-	private DispositivoRepository dispositivoRepo;
-	
-	
+	public List<Dispositivo> findAll();
+	public void save (Dispositivo dispositivo);
 	
 
 }

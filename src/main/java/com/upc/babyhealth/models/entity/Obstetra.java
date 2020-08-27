@@ -37,12 +37,7 @@ public class Obstetra {
 	private String apellidoPaterno;
 	private String apellidoMaterno;
 	private Long dni;
-	private ZonedDateTime fechaCreacion;
-	private ZonedDateTime fechaModificacion;
-	private String usuarioCreacion;
-	private String usuarioModificacion;
-	
-	
+
 	@OneToMany(mappedBy="obstetra",fetch=FetchType.LAZY)
 	private List<Gestante> gestantes;
 	
@@ -51,7 +46,7 @@ public class Obstetra {
 	private Usuario usuario;
 	
 	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name="FK_CELULAR", nullable=false)
+	@JoinColumn(name="FK_CELULAR")
 	private List<Celular> celulares;
 	
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)

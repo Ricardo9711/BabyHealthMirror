@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.upc.babyhealth.models.entity.Gestante;
-import com.upc.babyhealth.models.service.GestanteService;
+import com.upc.babyhealth.models.service.implementation.GestanteService;
 
 
 @RestController
@@ -39,7 +39,7 @@ public class GestanteController {
 	
 	@PostMapping("/gestantes")
 	Gestante newGestante(@RequestBody Gestante newGestante) {
-		return gestanteService.saveRPC(newGestante); 
+		return gestanteService.save(newGestante);
 	}
 	
 	@GetMapping("/gestantes/{id}")
@@ -57,8 +57,7 @@ public class GestanteController {
 					gestante.setApellidoPaterno(nuevaGestante.getApellidoPaterno());
 					gestante.setDni(nuevaGestante.getDni());
 					gestante.setEdad(nuevaGestante.getEdad());
-					gestante.setIndCompartirUbicacion(nuevaGestante.getIsIndCompartirUbicacion());
-					gestante.setRole(nuevaGestante.getRole());
+					gestante.setIndCompartirUbicacion(nuevaGestante.isIndCompartirUbicacion());
 					gestante.setSemanaGestacional(nuevaGestante.getSemanaGestacional());
 					return gestanteService.saveRPC(nuevaGestante);
 				})

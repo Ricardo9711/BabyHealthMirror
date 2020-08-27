@@ -1,15 +1,13 @@
 package com.upc.babyhealth.models.entity;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,17 +20,23 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Rol {
-	
+public class Rol implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long idRol;
-	private String nombreRol;
+
+	@Enumerated(EnumType.STRING)
+	private RolEnum nombreRol;
+
 	private ZonedDateTime fechaCreacion;
 	private ZonedDateTime fechaModificacion;
 	private String usuarioCreacion;
 	private String usuarioModificacion;
-	
+
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToMany(mappedBy="rol",fetch=FetchType.LAZY)
 	private List<Usuario> usuarios;
 
