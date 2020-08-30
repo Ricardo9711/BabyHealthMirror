@@ -4,9 +4,12 @@ import com.upc.babyhealth.models.dao.GestanteRepository;
 import com.upc.babyhealth.models.dao.RolRepository;
 import com.upc.babyhealth.models.dao.UsuarioRepository;
 import com.upc.babyhealth.models.entity.*;
+import com.upc.babyhealth.models.entity.request.SignUpRequest;
+import com.upc.babyhealth.models.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
 import java.time.ZonedDateTime;
@@ -15,80 +18,49 @@ import java.util.List;
 import java.util.stream.Stream;
 
 
-//(exclude={DataSourceAutoConfiguration.class})
-
 @SpringBootApplication
 public class BabyhealthApplication {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	PasswordEncoder passwordEncoder;
 	@Autowired
-	private RolRepository rolRepository;
+	UsuarioService usuarioService;
 	@Autowired
-	private GestanteRepository gestanteRepository;
+	RolRepository rolRepository;
 
-	/*
 	@PostConstruct
-	public void initUsers() {
-		Rol rol = new Rol();
-		rol.setIdRol((long) 1);
-		rol.setNombreRol(RolEnum.GESTANTE);
-		ArrayList<Usuario> usuarios = new ArrayList<>();
+	public void initAdmin(){
 
-		Usuario usuario = new Usuario();
-		usuario.setRol(rol);
-		usuario.setNombreUsuario("juanelv");
-		usuario.setContrasenia("123");
+		//creacion de roles
+		for (RolEnum r: RolEnum.values()){
+			Rol rol = new Rol();
+			rol.setNombreRol(r);
+			rol.setFechaCreacion(ZonedDateTime.now());
+			rol.setUsuarioCreacion("MASTER");
+			rolRepository.save(rol);
+		}
 
-		usuarios.add(usuario);
-		rol.setUsuarios(usuarios);
-		rol.addUsuario(usuario);
+		//creacion de usuario
+		Usuario newUser = new Usuario();
+		newUser.setNombreUsuario("MASTER");
+		newUser.setContrasenia("Babyhealth@upc@2020");
+		newUser.setUsuarioCreacion("MASTER");
 
-		Gestante gestante = new Gestante();
-		gestante.setNombres("Paula");
-		gestante.setApellidoMaterno("Arroyo");
-		gestante.setApellidoMaterno("Blanco");
-		gestante.setEdad((long) 40);
-		gestante.setDni((long) 43132211);
-		gestante.setIndCompartirUbicacion(true);
-		gestante.setSemanaGestacional((long) 3);
-		gestante.setUsuario(usuario);
+		SignUpRequest signUpRequest = new SignUpRequest(
+				newUser,
+				null,
+				"ADMINISTRADOR",
+				"MASTER"
+		);
 
-		CentroSalud centroSalud = new CentroSalud();
-		centroSalud.setNombreCentroSalud("Puente al Cielo");
-		centroSalud.setDireccion("Jr. Aqui nomas");
-		centroSalud.setDistrito("Callao");
-		centroSalud.setDepartamento("Callao");
-		centroSalud.setProvincia("Callao");
-		centroSalud.setFechaCreacion(ZonedDateTime.now());
-		centroSalud.setLatitud((double) -10);
-		centroSalud.setLongitud((double) -20);
-		centroSalud.setFechaModificacion(null);
-		centroSalud.setUsuarioCreacion("creador");
-		centroSalud.setUsuarioCreacion(null);
-
-		Usuario usuario2 = new Usuario();
-		usuario2.setRol(rol);
-		usuario2.setNombreUsuario("juanelvObstetra");
-		usuario2.setContrasenia("123");
-		usuarios.add(usuario2);
-		Obstetra obstetra = new Obstetra();
-		obstetra.setNombreObstetra("Carla");
-		obstetra.setApellidoPaterno("Perez");
-		obstetra.setApellidoMaterno("Gomez");
-		obstetra.setDni((long) 749238);
-		obstetra.setUsuario(usuario2);
-		obstetra.setCentroSalud(centroSalud);
+		try {
+			usuarioService.registerUser(signUpRequest);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 
-		gestante.setObstetra(obstetra);
-
-		rolRepository.save(rol);
-		usuarioRepository.save(usuario);
-		//gestanteRepository.save(gestante);
-		System.out.println("CONTRASEÑA cuack: " + usuario.getContrasenia());
 	}
-	 */
 
 	public static void main(String[] args) {
 		SpringApplication.run(BabyhealthApplication.class, args);

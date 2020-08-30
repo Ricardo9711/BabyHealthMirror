@@ -2,17 +2,14 @@ package com.upc.babyhealth.models.controller;
 
 import java.util.List;
 
+import com.upc.babyhealth.models.entity.Monitoreo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.upc.babyhealth.models.entity.Gestante;
 import com.upc.babyhealth.models.service.implementation.GestanteService;
+
+import javax.ws.rs.GET;
 
 
 @RestController
@@ -49,8 +46,10 @@ public class GestanteController {
 	
 	@PutMapping("/gestantes/{id}")
 	Gestante replaceGestante(@RequestBody Gestante nuevaGestante, @PathVariable Long id) {
-		
-		return gestanteService.findOneRPC(id)
+
+		//TODO
+		return gestanteService.findOne(id);
+				/*
 				.map(gestante -> {
 					gestante.setNombres(nuevaGestante.getNombres());
 					gestante.setApellidoMaterno(nuevaGestante.getApellidoMaterno());
@@ -59,16 +58,20 @@ public class GestanteController {
 					gestante.setEdad(nuevaGestante.getEdad());
 					gestante.setIndCompartirUbicacion(nuevaGestante.isIndCompartirUbicacion());
 					gestante.setSemanaGestacional(nuevaGestante.getSemanaGestacional());
-					return gestanteService.saveRPC(nuevaGestante);
+					return gestanteService.save(nuevaGestante);
 				})
 				.orElseGet(()-> {
 					nuevaGestante.setId(id);
-					return gestanteService.saveRPC(nuevaGestante);
+					return gestanteService.save(nuevaGestante);
 				});
+
+				 */
 	}
 	
 	@DeleteMapping("/gestantes/{id}")
 	void deleteGestante(@PathVariable Long id) {
 		gestanteService.deleteById(id);
 	}
+
+
 }

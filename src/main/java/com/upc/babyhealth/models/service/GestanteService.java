@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.upc.babyhealth.models.entity.Gestante;
+import com.upc.babyhealth.models.entity.Monitoreo;
 
 public interface GestanteService {
 	
@@ -11,10 +12,7 @@ public interface GestanteService {
 	public Gestante save(Gestante gestante);
 	public Gestante findOne(Long id);
 	public void deleteById(Long id);
-	public Optional<Gestante> findByDni (Long Dni);
-	
-	
-	//RPC Service
-	public Gestante saveRPC(Gestante gestante);
-	public Optional<Gestante> findOneRPC(Long id);
+	public Gestante findByDni (Long Dni);
+
+
 }

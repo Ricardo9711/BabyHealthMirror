@@ -60,19 +60,21 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
             newUser.setFechaCreacion(ZonedDateTime.now());
 
             //Asignacion y validacion del estado del usuario
-            if (signUpRequest.getNewUser().getEstado().toString() == ""){
+            if (signUpRequest.getNewUser().getEstado() == null || signUpRequest.getNewUser().getEstado().toString() == ""){
                 newUser.setEstado(UsuarioEstadoEnum.A);
             }
-            found: {
-                for (UsuarioEstadoEnum estado: UsuarioEstadoEnum.values()){
-                    if( signUpRequest.getNewUser().getEstado() == estado ){
-                        newUser.setEstado(signUpRequest.getNewUser().getEstado());
-                        break found;
+            else{
+                found: {
+                    for (UsuarioEstadoEnum estado: UsuarioEstadoEnum.values()){
+                        if( signUpRequest.getNewUser().getEstado() == estado ){
+                            newUser.setEstado(signUpRequest.getNewUser().getEstado());
+                            break found;
+                        }
                     }
+                    return ResponseEntity
+                            .badRequest()
+                            .body("El estado del usuario es invalido");
                 }
-                return ResponseEntity
-                        .badRequest()
-                        .body("El estado del usuario es invalido");
             }
 
 
@@ -90,7 +92,7 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
                 case "GESTANTE":
                     Gestante newGestante = mapper.convertValue(signUpRequest.getEntity(), Gestante.class);
 
-                    if(!gestanteService.findByDni(newGestante.getDni()).isEmpty() ) {
+                    if( gestanteService.findByDni(newGestante.getDni()) != null){
                         return ResponseEntity
                                 .badRequest()
                                 .body("el DNI ya existe");
@@ -106,7 +108,7 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
 
                 case "OBSTETRA":
                     Obstetra newObstetra = mapper.convertValue(signUpRequest.getEntity(), Obstetra.class);
-                    if(!obstetraService.findByDni(newObstetra.getDni()).isEmpty())
+                    if(obstetraService.findByDni(newObstetra.getDni()) != null )
                         return ResponseEntity
                                 .badRequest()
                                 .body("el DNI ya existe");

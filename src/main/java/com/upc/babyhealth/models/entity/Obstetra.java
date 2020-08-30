@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "gestantes","celulares"})
 public class Obstetra {
 	
 	@Id
@@ -38,6 +40,7 @@ public class Obstetra {
 	private String apellidoMaterno;
 	private Long dni;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "gestantes"})
 	@OneToMany(mappedBy="obstetra",fetch=FetchType.LAZY)
 	private List<Gestante> gestantes;
 	

@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class SignUpRequest {
 
     @NotNull(message = "User must not be null")
@@ -22,13 +23,4 @@ public class SignUpRequest {
     @NotBlank(message="Admin username is mandatory")
     private String creator;
 
-    /*
-    public SignUpRequest(){
-        newUser.setFechaCreacion(ZonedDateTime.now());
-        newUser.setFechaModificacion(null);
-        newUser.setUsuarioCreacion(null);
-        newUser.setUsuarioModificacion(null);
-    }
-
-     */
 }

@@ -12,6 +12,6 @@ import java.util.Optional;
 @Repository
 public interface ObstetraRepository extends JpaRepository<Obstetra, Long>{
 	
-	Optional<Obstetra> findByDni(Long dni);
+	Obstetra findByDni(Long dni);
 
 }

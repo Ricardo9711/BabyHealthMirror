@@ -34,7 +34,8 @@ public class Usuario {
 	private ZonedDateTime fechaModificacion;
 	private String usuarioCreacion;
 	private String usuarioModificacion;
-	
+
+
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name="FK_ROL", nullable=false)
 	private Rol rol;

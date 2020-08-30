@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ObstetraService {
 
-    Optional<Obstetra> findByDni(Long dni);
+    Obstetra findByDni(Long dni);
 
     Obstetra save(Obstetra obstetra);
 

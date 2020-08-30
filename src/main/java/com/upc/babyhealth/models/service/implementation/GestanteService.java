@@ -3,6 +3,7 @@ package com.upc.babyhealth.models.service.implementation;
 import java.util.List;
 import java.util.Optional;
 
+import com.upc.babyhealth.models.entity.Monitoreo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.upc.babyhealth.models.dao.GestanteRepository;
@@ -45,23 +46,11 @@ public class GestanteService implements com.upc.babyhealth.models.service.Gestan
 	}
 
 	@Override
-	public Optional<Gestante> findByDni(Long dni) {
+	public Gestante findByDni(Long dni) {
 		// TODO Auto-generated method stub
 		return gestanteRepo.findByDni(dni) ;
 	}
 
-	
-	//rpc
-	@Override
-	public Gestante saveRPC(Gestante gestante) {
-		// TODO Auto-generated method stub
-		return gestanteRepo.save(gestante);
-	}
 
-	@Override
-	public Optional<Gestante> findOneRPC(Long id) {
-		// TODO Auto-generated method stub
-		return gestanteRepo.findById(id);
-	}
 
 }

@@ -14,7 +14,7 @@ public class ObstetraService implements com.upc.babyhealth.models.service.Obstet
     private ObstetraRepository obstetraRepository;
 
     @Override
-    public Optional<Obstetra> findByDni(Long dni) {
+    public Obstetra findByDni(Long dni) {
 
         return obstetraRepository.findByDni(dni);
     }

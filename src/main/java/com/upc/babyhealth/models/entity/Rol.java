@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +19,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "usuarios"})
 public class Rol implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -36,13 +36,12 @@ public class Rol implements Serializable {
 	private String usuarioCreacion;
 	private String usuarioModificacion;
 
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	@OneToMany(mappedBy="rol",fetch=FetchType.LAZY)
+
+	@OneToMany( mappedBy="rol",fetch=FetchType.LAZY)
 	private List<Usuario> usuarios;
 
 	public void addUsuario(Usuario usuario){
 		usuarios.add(usuario);
 	}
-
 
 }
