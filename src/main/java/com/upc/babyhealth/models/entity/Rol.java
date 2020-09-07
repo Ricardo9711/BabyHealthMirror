@@ -18,7 +18,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "usuarios"})
 public class Rol implements Serializable {
 

@@ -1,10 +1,6 @@
 package com.upc.babyhealth.models.service;
 
 import com.upc.babyhealth.models.entity.Obstetra;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface ObstetraService {
 
@@ -12,4 +8,7 @@ public interface ObstetraService {
 
     Obstetra save(Obstetra obstetra);
 
+    Obstetra findById(Long id);
+
+    Obstetra update(Obstetra obstetra, Long obstetraId);
 }

@@ -22,6 +22,11 @@ public class UsuarioController {
         return usuarioService.registerUser(signUpRequest);
     }
 
+    @GetMapping(params = "username")
+    public Usuario findByUsername(@RequestParam String username){
+        return usuarioService.findByUsername(username);
+    }
+
     @GetMapping
     public List<Usuario> findAll(){
         return usuarioService.findAll();

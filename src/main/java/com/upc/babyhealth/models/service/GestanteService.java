@@ -15,4 +15,5 @@ public interface GestanteService {
 	public Gestante findByDni (Long Dni);
 
 
+    Gestante update(Gestante nuevaGestante);
 }

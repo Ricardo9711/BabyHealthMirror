@@ -4,6 +4,10 @@ import java.time.ZonedDateTime;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "contrasenia"})
 public class Usuario {
 	
 	@Id
@@ -36,7 +40,9 @@ public class Usuario {
 	private String usuarioModificacion;
 
 
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idRol")
+	@JsonIdentityReference(alwaysAsId = true)
+	@ManyToOne(optional = false,fetch = FetchType.EAGER)
 	@JoinColumn(name="FK_ROL", nullable=false)
 	private Rol rol;
 

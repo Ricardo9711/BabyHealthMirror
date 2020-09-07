@@ -24,4 +24,9 @@ public class MonitoreoController {
         return monitoreoService.findLastMonitoreo(id);
     }
 
+    @PostMapping("/gestatntes/{id}/monitoreos")
+    public Monitoreo save(@RequestBody Monitoreo monitoreo){
+        return monitoreoService.save(monitoreo);
+    }
+
 }

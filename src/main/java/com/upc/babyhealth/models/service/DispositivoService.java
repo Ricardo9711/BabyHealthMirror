@@ -7,7 +7,7 @@ import com.upc.babyhealth.models.entity.Dispositivo;
 public interface DispositivoService {
 	
 	public List<Dispositivo> findAll();
-	public void save (Dispositivo dispositivo);
-	
-
+	public Dispositivo save (Dispositivo dispositivo);
+	public Dispositivo findById(Long id);
+	public Dispositivo update(Dispositivo dispositivo);
 }

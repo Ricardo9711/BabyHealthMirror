@@ -20,13 +20,11 @@ public class GestanteService implements com.upc.babyhealth.models.service.Gestan
 
 	@Override
 	public List<Gestante> findAll() {
-		// TODO Auto-generated method stub
 		return gestanteRepo.findAll();
 	}
 
 	@Override
 	public Gestante save(Gestante gestante) {
-		// TODO Auto-generated method stub
 
 		//verificar si es que el usuario existe
 
@@ -35,22 +33,24 @@ public class GestanteService implements com.upc.babyhealth.models.service.Gestan
 
 	@Override
 	public Gestante findOne(Long id) {
-		// TODO Auto-generated method stub
 		return gestanteRepo.findById(id).orElse(null);
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
 		gestanteRepo.deleteById(id);
 	}
 
 	@Override
 	public Gestante findByDni(Long dni) {
-		// TODO Auto-generated method stub
 		return gestanteRepo.findByDni(dni) ;
 	}
 
+	@Override
+	public Gestante update(Gestante nuevaGestante) {
+		//TODO
+		return gestanteRepo.save(nuevaGestante);
+	}
 
 
 }

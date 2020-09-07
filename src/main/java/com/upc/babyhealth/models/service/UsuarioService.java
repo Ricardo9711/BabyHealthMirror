@@ -13,4 +13,6 @@ public interface UsuarioService {
     ResponseEntity<?> registerUser(SignUpRequest signUpRequest) throws Exception;
 
     List<Usuario> findAll();
+
+    Usuario findByUsername(String username);
 }

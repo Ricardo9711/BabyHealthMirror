@@ -1,5 +1,8 @@
 package com.upc.babyhealth.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import java.util.List;
@@ -21,7 +24,6 @@ import javax.persistence.OneToOne;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Gestante {
 
 	@Id
@@ -36,11 +38,14 @@ public class Gestante {
 	private Long semanaGestacional;
 	private boolean indCompartirUbicacion;
 
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
+	@JsonIdentityReference(alwaysAsId = true)
 	@OneToOne
 	@JoinColumn(name = "FK_USUARIO", updatable = false, nullable = false)
 	private Usuario usuario;
 
-
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name="FK_OBSTETRA", nullable=false)
 	private Obstetra obstetra;
