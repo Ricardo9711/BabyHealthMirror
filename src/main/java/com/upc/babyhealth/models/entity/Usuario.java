@@ -20,7 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "contrasenia"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "contrasenia"})
 public class Usuario {
 	
 	@Id
@@ -29,6 +29,7 @@ public class Usuario {
 
 	@Column(nullable = false)
 	private String nombreUsuario;
+
 	@Column(nullable = false)
 	private String contrasenia;
 
