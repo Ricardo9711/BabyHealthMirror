@@ -37,7 +37,8 @@ public class BabyhealthApplication {
 			rol.setNombreRol(r);
 			rol.setFechaCreacion(ZonedDateTime.now());
 			rol.setUsuarioCreacion("MASTER");
-			rolRepository.save(rol);
+			if( rolRepository.findByNombreRol(rol.getNombreRol()) == null)
+				rolRepository.save(rol);
 		}
 
 		//creacion de usuario

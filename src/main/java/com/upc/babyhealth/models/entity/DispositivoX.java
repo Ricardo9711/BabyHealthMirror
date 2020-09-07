@@ -22,17 +22,15 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DispositivoX {
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idRegistro;
-	private ZonedDateTime fechaTotal; //esto puede guardar fecha y hora
-	private LocalDate fecha; // por definir
-	private LocalTime hora; // por definir
-	private String evento;  // por definir
-	private Double valorRegistrado; //por definir
+	private Long idDispositivo;
+	private ZonedDateTime fechaEvento; //hora y fecha de la captura del sensor
+	private String evento; //default: autoreplay
+	private Double valorRegistrado;
 	private ZonedDateTime fechaCreacion;
-	private ZonedDateTime fechaMoificacion;
-	
+	private String usuarioCreacion; //default: SENSOR
 
 }

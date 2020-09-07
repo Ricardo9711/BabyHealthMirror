@@ -7,4 +7,5 @@ import java.util.List;
 public interface MonitoreoService {
     public List<Monitoreo> findBySemanaAndGestante(int semana, Long gestanteId);
     public Monitoreo findLastMonitoreo(Long gestanteId);
+    Monitoreo save(Monitoreo monitoreo);
 }

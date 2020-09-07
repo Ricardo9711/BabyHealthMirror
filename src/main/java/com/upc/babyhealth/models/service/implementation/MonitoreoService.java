@@ -27,4 +27,9 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
         gestante.setId(gestanteId);
         return monitoreRepository.findTopByGestanteOrderByFechaCreacionDesc(gestante);
     }
+
+    @Override
+    public Monitoreo save(Monitoreo monitoreo) {
+        return monitoreRepository.save(monitoreo);
+    }
 }

@@ -2,7 +2,9 @@ package com.upc.babyhealth.models.controller;
 
 import java.util.List;
 
+import com.upc.babyhealth.models.entity.DispositivoGestante;
 import com.upc.babyhealth.models.entity.Monitoreo;
+import com.upc.babyhealth.models.service.DispositivoGestanteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,31 +49,17 @@ public class GestanteController {
 	@PutMapping("/gestantes/{id}")
 	Gestante replaceGestante(@RequestBody Gestante nuevaGestante, @PathVariable Long id) {
 
-		//TODO
-		return gestanteService.findOne(id);
-				/*
-				.map(gestante -> {
-					gestante.setNombres(nuevaGestante.getNombres());
-					gestante.setApellidoMaterno(nuevaGestante.getApellidoMaterno());
-					gestante.setApellidoPaterno(nuevaGestante.getApellidoPaterno());
-					gestante.setDni(nuevaGestante.getDni());
-					gestante.setEdad(nuevaGestante.getEdad());
-					gestante.setIndCompartirUbicacion(nuevaGestante.isIndCompartirUbicacion());
-					gestante.setSemanaGestacional(nuevaGestante.getSemanaGestacional());
-					return gestanteService.save(nuevaGestante);
-				})
-				.orElseGet(()-> {
-					nuevaGestante.setId(id);
-					return gestanteService.save(nuevaGestante);
-				});
-
-				 */
+		return gestanteService.update(nuevaGestante);
 	}
 	
 	@DeleteMapping("/gestantes/{id}")
 	void deleteGestante(@PathVariable Long id) {
 		gestanteService.deleteById(id);
 	}
+
+
+
+
 
 
 }
