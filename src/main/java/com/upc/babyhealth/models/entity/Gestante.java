@@ -33,6 +33,8 @@ public class Gestante {
 	private String nombres;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
+	//TODO
+	//Cambiar edad por fecha de nacimiento
 	private Long edad;
 	private Long dni;
 	private Long semanaGestacional;

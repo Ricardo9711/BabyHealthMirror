@@ -27,6 +27,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtFilter jwtFilter;
 
+    private static final String[] whitelist ={
+            // -- swagger ui
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
@@ -49,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/authentication").permitAll()
+                .antMatchers(whitelist).permitAll()
                 .antMatchers("/usuarios").hasRole("ADMINISTRADOR")
                 .anyRequest().authenticated()
                 .and().exceptionHandling()

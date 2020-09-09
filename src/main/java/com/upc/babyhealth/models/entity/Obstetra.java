@@ -38,6 +38,7 @@ public class Obstetra {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	private char sexo;
 	private String nombreObstetra;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
