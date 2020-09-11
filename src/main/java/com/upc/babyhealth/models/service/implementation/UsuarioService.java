@@ -47,6 +47,7 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
         return usuarioRepository.findByNombreUsuario(username);
     }
 
+
     @Override
     public ResponseEntity<?> registerUser(SignUpRequest signUpRequest) throws Exception{
 

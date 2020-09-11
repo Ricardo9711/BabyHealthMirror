@@ -35,6 +35,7 @@ public class Usuario {
 
 	@Enumerated(EnumType.STRING)
 	private UsuarioEstadoEnum estado;
+
 	private ZonedDateTime fechaCreacion;
 	private ZonedDateTime fechaModificacion;
 	private String usuarioCreacion;

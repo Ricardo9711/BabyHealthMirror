@@ -26,7 +26,7 @@ public class Familiar {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long idFamiliar;
 	private Long dni;
-	private String nombreFamiliar;
+	private String nombres;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
 	private String parentesco;

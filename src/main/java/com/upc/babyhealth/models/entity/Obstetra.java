@@ -39,7 +39,7 @@ public class Obstetra {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private char sexo;
-	private String nombreObstetra;
+	private String nombres;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
 	private Long dni;
@@ -65,14 +65,5 @@ public class Obstetra {
 	@JoinColumn(name="FK_CENTRO_SALUD", nullable=false)
 	private CentroSalud centroSalud;
 	
-
-	public void addCelular(Celular celular){
-		celulares.add(celular);
-	}
-
-
-	public void addGestante(Gestante gestante){
-			gestantes.add(gestante);
-	}
 
 }

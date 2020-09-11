@@ -3,6 +3,7 @@ package com.upc.babyhealth.models.service.implementation;
 import com.upc.babyhealth.models.dao.ObstetraRepository;
 import com.upc.babyhealth.models.entity.CentroSalud;
 import com.upc.babyhealth.models.entity.Obstetra;
+import com.upc.babyhealth.models.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,20 @@ public class ObstetraService implements com.upc.babyhealth.models.service.Obstet
         return obstetraRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public Obstetra findByUserId(Long id) {
+        Usuario u = new Usuario();
+        u.setIdUsuario(id);
+        return obstetraRepository.findByUsuario(u);
+    }
+
+    @Override
+    public Obstetra findByUsername(String username) {
+        Usuario u = new Usuario();
+        u.setNombreUsuario(username);
+        return obstetraRepository.findByUsuario_NombreUsuario(username);
+    }
+
 
     @Override
     public Obstetra update(Obstetra obstetra, Long obstetraId) {
@@ -36,8 +51,8 @@ public class ObstetraService implements com.upc.babyhealth.models.service.Obstet
 
             if(obstetra.getDni()!=null && obstetra.getDni().toString() != "" )
                 existingObstetra.setDni(obstetra.getDni());
-            if(obstetra.getNombreObstetra()!=null && obstetra.getNombreObstetra()!="")
-                existingObstetra.setNombreObstetra(obstetra.getNombreObstetra());
+            if(obstetra.getNombres()!=null && obstetra.getNombres()!="")
+                existingObstetra.setNombres(obstetra.getNombres());
             if(obstetra.getApellidoMaterno()!=null && obstetra.getApellidoMaterno()!="")
                 existingObstetra.setApellidoMaterno(obstetra.getApellidoMaterno());
             if(obstetra.getApellidoPaterno()!=null && obstetra.getApellidoPaterno()!="")

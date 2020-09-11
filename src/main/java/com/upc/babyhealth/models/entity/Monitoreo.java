@@ -23,7 +23,6 @@ public class Monitoreo {
 	private Long idMonitoreo;
 	private ZonedDateTime fechaInicio;
 	private ZonedDateTime fechaFin;
-	//TODO
 	@Enumerated(EnumType.STRING)
 	private MonitoreoEstadoEnum estado;
 	private Double contraccionesPromedio;

@@ -13,6 +13,8 @@ public interface GestanteService {
 	public Gestante findOne(Long id);
 	public void deleteById(Long id);
 	public Gestante findByDni (Long Dni);
+	public Gestante findByUserId(Long id);
+	public Gestante findByUsername(String username);
 
 
     Gestante update(Gestante nuevaGestante);

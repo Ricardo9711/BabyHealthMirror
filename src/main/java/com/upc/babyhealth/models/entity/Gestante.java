@@ -28,7 +28,6 @@ public class Gestante {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-
 	private Long id;
 	private String nombres;
 	private String apellidoPaterno;
@@ -66,20 +65,6 @@ public class Gestante {
 	}
 
 
-	/*
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.apellidoMaterno,
-							this.apellidoPaterno,
-							this.dni,
-							this.edad,
-							this.id,
-							this.indCompartirUbicacion,
-							this.nombres,
-							this.semanaGestacional);
-	}
-
-	 */
 	
 	@Override
 	public boolean equals(Object obj) {

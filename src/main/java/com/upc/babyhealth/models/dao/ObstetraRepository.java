@@ -1,5 +1,6 @@
 package com.upc.babyhealth.models.dao;
 
+import com.upc.babyhealth.models.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +14,8 @@ import java.util.Optional;
 public interface ObstetraRepository extends JpaRepository<Obstetra, Long>{
 	
 	Obstetra findByDni(Long dni);
+    Obstetra findByUsuario(Usuario usuario);
+    Obstetra findByUsuario_NombreUsuario(String username);
+    Obstetra findByUsuario_IdUsuario(Long id);
 
 }

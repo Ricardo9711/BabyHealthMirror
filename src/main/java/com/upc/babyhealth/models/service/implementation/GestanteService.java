@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.upc.babyhealth.models.entity.Monitoreo;
+import com.upc.babyhealth.models.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.upc.babyhealth.models.dao.GestanteRepository;
@@ -44,6 +45,18 @@ public class GestanteService implements com.upc.babyhealth.models.service.Gestan
 	@Override
 	public Gestante findByDni(Long dni) {
 		return gestanteRepo.findByDni(dni) ;
+	}
+
+	@Override
+	public Gestante findByUserId(Long id) {
+		Usuario u = new Usuario();
+		u.setIdUsuario(id);
+		return gestanteRepo.findByUsuario(u);
+	}
+
+	@Override
+	public Gestante findByUsername(String username) {
+		return gestanteRepo.findByUsuario_NombreUsuario(username);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.upc.babyhealth.models.entity.Monitoreo;
+import com.upc.babyhealth.models.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.upc.babyhealth.models.entity.Gestante;
@@ -12,4 +13,7 @@ import com.upc.babyhealth.models.entity.Gestante;
 public interface GestanteRepository extends JpaRepository<Gestante, Long>{
 
 	Gestante findByDni(Long dni);
+    Gestante findByUsuario(Usuario usuario);
+    Gestante findByUsuario_IdUsuario(Long id);
+    Gestante findByUsuario_NombreUsuario(String username);
 }
