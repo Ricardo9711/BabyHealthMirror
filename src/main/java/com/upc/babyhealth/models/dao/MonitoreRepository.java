@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface MonitoreRepository extends JpaRepository<Monitoreo, Long> {
     public List<Monitoreo> findBySemanaGestacionAndGestante(int semana, Gestante gestante);
+    public List<Monitoreo> findByGestante_Id(Long gestanteId);
 
     //recuperar el monitoreo mas reciente
     //ordenar por fecha creacion

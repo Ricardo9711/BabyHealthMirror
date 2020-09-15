@@ -33,10 +33,6 @@ public class Dispositivo {
 	private ZonedDateTime fechaModificacion;
 	private String usuarioCreacion;
 	private String usuarioModificacion;
-	
-	@OneToMany(mappedBy="dispositivo",fetch=FetchType.LAZY)
-	private List<DispositivoGestante> dispositivos;
-	public void addDispositivo(DispositivoGestante dispositivo){
-		dispositivos.add(dispositivo);
-	}
+
+
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,9 +33,8 @@ public class Gestante {
 	private String nombres;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
-	//TODO
-	//Cambiar edad por fecha de nacimiento
-	private Long edad;
+	private ZonedDateTime fechaNacimiento;
+	private ZonedDateTime fechaInicioGestacion;
 	private Long dni;
 	private Long semanaGestacional;
 	private boolean indCompartirUbicacion;
@@ -76,7 +76,8 @@ public class Gestante {
 		return Objects.equals(this.apellidoMaterno, other.apellidoMaterno)
 			&& Objects.equals(this.apellidoPaterno, other.apellidoPaterno)
 			&& Objects.equals(this.dni, other.dni)
-			&& Objects.equals(this.edad, other.edad)
+				//TODO
+				//Falta agregar los campos actualizados
 			&& Objects.equals(this.id, other.id)
 			&& Objects.equals(this.indCompartirUbicacion, other.indCompartirUbicacion)
 			&& Objects.equals(this.nombres, other.nombres)

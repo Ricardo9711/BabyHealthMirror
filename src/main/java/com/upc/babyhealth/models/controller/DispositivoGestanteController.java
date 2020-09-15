@@ -12,6 +12,7 @@ public class DispositivoGestanteController {
     @Autowired
     DispositivoGestanteService dispositivoGestanteService;
 
+
     @GetMapping("gestantes/{gestanteId}/dispositivos/{dispositivoId}")
     List<DispositivoGestante> findByGestanteIdAndDispositivoId(@PathVariable Long gestanteId, @PathVariable Long dispositivoId){
         return dispositivoGestanteService.findByGestanteIdAndDispositivoId(gestanteId,dispositivoId);

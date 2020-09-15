@@ -17,9 +17,9 @@ public class DispositivoXService implements com.upc.babyhealth.models.service.Di
     @Override
     public List<DispositivoX> findByIdAndDate(Long dispositivoId, String fecha, String hora) {
         String fechaYHora = fecha + " " + hora;
-        String tableName = "DISPOSITIVOX";//+dispositivoId.toString();
+        //String tableName = "DISPOSITIVO_" + dispositivoId.toString();
 
-
-        return dispositivoXRepository.findCaptureByDispositivoIdAndDate(tableName,fechaYHora);
+        //return dispositivoXRepository.findCaptureByDispositivoIdAndDate(tableName,fechaYHora);
+        return dispositivoXRepository.findCaptureByDispositivoIdAndDate(dispositivoId,fechaYHora);
     }
 }

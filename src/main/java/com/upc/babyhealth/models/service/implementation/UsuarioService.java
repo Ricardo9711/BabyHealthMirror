@@ -2,6 +2,7 @@ package com.upc.babyhealth.models.service.implementation;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.upc.babyhealth.models.dao.GestanteRepository;
 import com.upc.babyhealth.models.dao.ObstetraRepository;
 import com.upc.babyhealth.models.dao.RolRepository;
@@ -87,6 +88,8 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
 
             //now switch among roles
             ObjectMapper mapper = new ObjectMapper();
+            //mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            mapper.registerModule(new JavaTimeModule());
             Rol userRole;
             switch (signUpRequest.getRole()){
 

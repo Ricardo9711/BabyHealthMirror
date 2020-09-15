@@ -67,6 +67,9 @@ public class JwtUtil {
             Gestante g = gestanteService.findByUsername(authentication.getName());
             claims.put("EntityID",g.getId());
         }
+        else{
+            claims.put("EntityID", null);
+        }
 
         claims.put("AUTHORITIES_KEY", authentication.getAuthorities());
         //claims.put("User", usuarioService.findByUsername(authentication.getName()));

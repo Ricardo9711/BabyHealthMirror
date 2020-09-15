@@ -4,6 +4,9 @@ import java.time.ZonedDateTime;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +37,9 @@ public class Monitoreo {
 	private String usuarioCreacion;
 	private String usuarioModificacion;
 	private Integer semanaGestacion;
-	
+
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name="FK_GESTANTE", nullable=false)
 	private Gestante gestante;

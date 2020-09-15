@@ -17,15 +17,18 @@ public class Alerta {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long idAlerta;
-    private String descripcion;
-    private TipoAlertaEnum tipo;
     private Double intensidadMmhg;
     private ZonedDateTime fechaCreacion;
     private ZonedDateTime usuarioCreacion;
     private ZonedDateTime fechaVisto;
     private String usuarioVisto;
+
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
-    @JoinColumn(name="id_monitoreo", nullable=false)
-    private Monitoreo monitoreo;
+    @JoinColumn(name="id_gestante", nullable=false)
+    private Gestante gestante;
+
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JoinColumn(name="id_tipo", nullable=false)
+    private TipoAlerta tipoAlerta;
 
 }

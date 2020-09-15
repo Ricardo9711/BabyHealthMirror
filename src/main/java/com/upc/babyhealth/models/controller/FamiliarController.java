@@ -23,4 +23,14 @@ public class FamiliarController {
         return familiarService.findAllByGestante(id);
     }
 
+    @PutMapping("/gestantes/{gestanteId}/familiares/{familiarId}")
+    Familiar update(@PathVariable Long gestanteId,@PathVariable Long familiarId, @RequestBody Familiar modifiedFamiliar){
+        return familiarService.update(gestanteId,familiarId,modifiedFamiliar);
+    }
+
+    @DeleteMapping("/gestantes/{gestanteId}/familiares/{familiarId}")
+    void delete(@PathVariable Long gestanteId,@PathVariable Long familiarId){
+        familiarService.delete(gestanteId, familiarId);
+    }
+
 }

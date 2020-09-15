@@ -40,6 +40,8 @@ public class Usuario {
 	private ZonedDateTime fechaModificacion;
 	private String usuarioCreacion;
 	private String usuarioModificacion;
+	private String email;
+	private String nroCelular;
 
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idRol")

@@ -15,10 +15,15 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
     private MonitoreRepository monitoreRepository;
 
     @Override
-    public List<Monitoreo> findBySemanaAndGestante(int semana, Long gestanteId) {
+    public List<Monitoreo> findBySemanaAndGestante(Integer semana, Long gestanteId) {
         Gestante gestante = new Gestante();
         gestante.setId(gestanteId);
         return monitoreRepository.findBySemanaGestacionAndGestante(semana, gestante);
+    }
+
+    @Override
+    public List<Monitoreo> findByGestante(Long gestanteId) {
+        return monitoreRepository.findByGestante_Id(gestanteId);
     }
 
     @Override

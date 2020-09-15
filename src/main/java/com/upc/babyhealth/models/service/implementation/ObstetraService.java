@@ -49,15 +49,15 @@ public class ObstetraService implements com.upc.babyhealth.models.service.Obstet
         Obstetra existingObstetra = obstetraRepository.findById(obstetraId).orElse(null);
         if(existingObstetra != null) {
 
-            if(obstetra.getDni()!=null && obstetra.getDni().toString() != "" )
+            if(obstetra.getDni()!=null && !obstetra.getDni().toString().equals(""))
                 existingObstetra.setDni(obstetra.getDni());
-            if(obstetra.getNombres()!=null && obstetra.getNombres()!="")
+            if(obstetra.getNombres()!=null && !obstetra.getNombres().equals(""))
                 existingObstetra.setNombres(obstetra.getNombres());
-            if(obstetra.getApellidoMaterno()!=null && obstetra.getApellidoMaterno()!="")
+            if(obstetra.getApellidoMaterno()!=null && !obstetra.getApellidoMaterno().equals(""))
                 existingObstetra.setApellidoMaterno(obstetra.getApellidoMaterno());
-            if(obstetra.getApellidoPaterno()!=null && obstetra.getApellidoPaterno()!="")
+            if(obstetra.getApellidoPaterno()!=null && !obstetra.getApellidoPaterno().equals(""))
                 existingObstetra.setApellidoPaterno(obstetra.getApellidoPaterno());
-            if(obstetra.getCentroSalud().getIdCentroSalud()!=null && obstetra.getCentroSalud().getIdCentroSalud().toString()!="")
+            if(obstetra.getCentroSalud().getIdCentroSalud()!=null && !obstetra.getCentroSalud().getIdCentroSalud().toString().equals(""))
             {
                 CentroSalud newCentroSalud = new CentroSalud();
                 newCentroSalud.setIdCentroSalud(obstetra.getCentroSalud().getIdCentroSalud());
