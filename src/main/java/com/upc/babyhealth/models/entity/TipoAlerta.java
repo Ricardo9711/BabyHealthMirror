@@ -21,7 +21,7 @@ public class TipoAlerta {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long idTipo;
     private String descripcion;
-    private String texto;
+    private String nombre;
 
 
 }

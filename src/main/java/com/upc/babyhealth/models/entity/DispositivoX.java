@@ -28,8 +28,8 @@ public class DispositivoX {
 	private Long idRegistro;
 	private Long idDispositivo;
 	private ZonedDateTime fechaEvento; //hora y fecha de la captura del sensor
-	private String evento; //default: autoreplay
-	private Double valorRegistrado;
+	private String evento; //default: auto replay
+	private Double valorRegistrado; //intensidad
 	private ZonedDateTime fechaCreacion;
 	private String usuarioCreacion; //default: SENSOR
 

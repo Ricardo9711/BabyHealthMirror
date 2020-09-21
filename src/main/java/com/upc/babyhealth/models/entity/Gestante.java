@@ -38,6 +38,7 @@ public class Gestante {
 	private Long dni;
 	private Long semanaGestacional;
 	private boolean indCompartirUbicacion;
+	private boolean tieneDispositivo;
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
 	@JsonIdentityReference(alwaysAsId = true)

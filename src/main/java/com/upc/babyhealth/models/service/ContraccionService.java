@@ -8,4 +8,5 @@ public interface ContraccionService {
 
     public List<Contraccion> findAll();
     public Contraccion findById(Long id);
+    public Contraccion save(Contraccion contraccion);
 }

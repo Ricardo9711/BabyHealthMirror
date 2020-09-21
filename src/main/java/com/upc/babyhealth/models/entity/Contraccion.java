@@ -32,24 +32,25 @@ public class Contraccion {
 	@Column(name ="ID_CONTRACCION")
 	private Long idContraccion;
 	@Column(name ="INTENSIDAD")
-	private Double intensidad;
+	private Double intensidad; //valor mas alto de la contraccion
 	@Column(name ="FECHA_INICIO")
-	private ZonedDateTime fechaInicio;
+	private ZonedDateTime fechaInicio; //fecha de la primera captura de la contraccion
 	@Column(name ="FECHA_FIN")
-	private ZonedDateTime fechaFin;
+	private ZonedDateTime fechaFin; //fecha de la ultima captura de la contraccion
 	@Column(name ="DURACION")
 	private Double duracion;
 	@Column(name ="FECHA_CREACION")
-	private ZonedDateTime fechaCreacion;
+	private ZonedDateTime fechaCreacion; //fecha y hora final de la captura de la contraccion
 	@Column(name ="FECHA_MODIFICACION")
-	private ZonedDateTime fechaMoificacion;
+	private ZonedDateTime fechaModificacion;
 	@Column(name ="USUARIO_CREACION")
 	private String usuarioCreacion;
 	@Column(name ="USUARIO_MODIFICACION")
 	private String usuarioModificacion;
+	private String nivel; //Alta - Intermedia - Baja (?
 	
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
-	@JoinColumn(name="FK_TIPO_CONTRACCION", nullable=false)
+	@JoinColumn(name="FK_TIPO_CONTRACCION", nullable=true)
 	private TipoContraccion tipoContraccion;
 	
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)

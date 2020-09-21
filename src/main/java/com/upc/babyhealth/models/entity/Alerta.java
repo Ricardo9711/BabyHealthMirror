@@ -1,5 +1,8 @@
 package com.upc.babyhealth.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,14 +22,18 @@ public class Alerta {
     private Long idAlerta;
     private Double intensidadMmhg;
     private ZonedDateTime fechaCreacion;
-    private ZonedDateTime usuarioCreacion;
+    private String usuarioCreacion;
     private ZonedDateTime fechaVisto;
     private String usuarioVisto;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="id_gestante", nullable=false)
     private Gestante gestante;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTipo")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="id_tipo", nullable=false)
     private TipoAlerta tipoAlerta;

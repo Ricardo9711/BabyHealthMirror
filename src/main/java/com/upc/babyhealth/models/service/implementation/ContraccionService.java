@@ -22,4 +22,10 @@ public class ContraccionService implements com.upc.babyhealth.models.service.Con
     public Contraccion findById(Long id) {
         return contraccionRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public Contraccion save(Contraccion contraccion) {
+
+        return contraccionRepository.save(contraccion);
+    }
 }

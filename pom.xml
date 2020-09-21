@@ -146,6 +146,17 @@
 			<version>2.9.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio-java-sdk</artifactId>
+			<version>3.4.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.9.0</version>
+		</dependency>
 
 	</dependencies>
 

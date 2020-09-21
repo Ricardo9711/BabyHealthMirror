@@ -1,6 +1,6 @@
 package com.upc.babyhealth.models.entity;
 
 public enum MonitoreoEstadoEnum {
-    A //Abierto
+    I //Iniciado
     ,F //Finalizado
 }
