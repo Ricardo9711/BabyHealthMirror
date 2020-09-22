@@ -26,7 +26,7 @@ public class ContraccionController {
     }
 
     @PostMapping()
-    Contraccion save(@RequestBody ContraccionRequest contraccionRequest){
+    Contraccion save(@RequestBody ContraccionRequest contraccionRequest) throws Exception {
         return contraccionService.save(contraccionRequest);
     }
 

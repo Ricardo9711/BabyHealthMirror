@@ -32,12 +32,19 @@ public class ContraccionService implements com.upc.babyhealth.models.service.Con
     }
 
     @Override
-    public Contraccion save(ContraccionRequest contraccionRequest) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Contraccion contraccion = mapper.convertValue(contraccionRequest,Contraccion.class);
-        contraccion.setMonitoreo( monitoreoService.findById(contraccionRequest.getMonitoreoId()) );
+    public Contraccion save(ContraccionRequest contraccionRequest) throws Exception {
+        Contraccion contraccion = null;
+
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            contraccion = mapper.convertValue(contraccionRequest,Contraccion.class);
+            contraccion.setMonitoreo( monitoreoService.findById(contraccionRequest.getMonitoreoId()) );
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+
         return contraccionRepository.save(contraccion);
     }
 }

@@ -9,5 +9,5 @@ public interface ContraccionService {
 
     public List<Contraccion> findAll();
     public Contraccion findById(Long id);
-    public Contraccion save(ContraccionRequest contraccionRequest);
+    public Contraccion save(ContraccionRequest contraccionRequest) throws Exception;
 }
