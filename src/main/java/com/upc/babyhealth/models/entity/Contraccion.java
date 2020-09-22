@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +35,7 @@ public class Contraccion {
 	@Column(name ="ID_CONTRACCION")
 	private Long idContraccion;
 	@Column(name ="INTENSIDAD")
-	private Double intensidad; //valor mas alto de la contraccion
+	private Double intensidad; //valor mas alto de la contraccion (puede ser null, de acuerdo si tiene wearable o no)
 	@Column(name ="FECHA_INICIO")
 	private ZonedDateTime fechaInicio; //fecha de la primera captura de la contraccion
 	@Column(name ="FECHA_FIN")
@@ -52,7 +55,9 @@ public class Contraccion {
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name="FK_TIPO_CONTRACCION", nullable=true)
 	private TipoContraccion tipoContraccion;
-	
+
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idMonitoreo")
+	@JsonIdentityReference(alwaysAsId = true)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name="FK_MONITOREO", nullable=false)
 	private Monitoreo monitoreo;

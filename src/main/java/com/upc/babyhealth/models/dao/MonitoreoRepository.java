@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public interface MonitoreRepository extends JpaRepository<Monitoreo, Long> {
+public interface MonitoreoRepository extends JpaRepository<Monitoreo, Long> {
     public List<Monitoreo> findBySemanaGestacionAndGestante(int semana, Gestante gestante);
     public List<Monitoreo> findByGestante_Id(Long gestanteId);
 

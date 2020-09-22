@@ -1,6 +1,7 @@
 package com.upc.babyhealth.models.controller;
 
 import com.upc.babyhealth.models.entity.Contraccion;
+import com.upc.babyhealth.models.entity.request.ContraccionRequest;
 import com.upc.babyhealth.models.service.implementation.ContraccionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +25,9 @@ public class ContraccionController {
         return contraccionService.findById(id);
     }
 
-    //TODO POST
     @PostMapping()
-    Contraccion save(@RequestBody Contraccion contraccion){
-        return contraccionService.save(contraccion);
+    Contraccion save(@RequestBody ContraccionRequest contraccionRequest){
+        return contraccionService.save(contraccionRequest);
     }
 
 }
