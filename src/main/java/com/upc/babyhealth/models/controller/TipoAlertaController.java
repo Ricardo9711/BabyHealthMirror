@@ -14,7 +14,7 @@ public class TipoAlertaController {
     private TipoAlertaService tipoAlertaService;
 
 
-    @GetMapping("/tipoAlertas")
+    @GetMapping("/tipo-alertas")
     List<TipoAlerta> findAll(){
         return tipoAlertaService.findAll();
     }
