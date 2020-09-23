@@ -52,8 +52,8 @@ public class Contraccion {
 	private String usuarioModificacion;
 	private String nivel; //Alta - Intermedia - Baja (?
 	
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
-	@JoinColumn(name="FK_TIPO_CONTRACCION", nullable=true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="FK_TIPO_CONTRACCION")
 	private TipoContraccion tipoContraccion;
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idMonitoreo")

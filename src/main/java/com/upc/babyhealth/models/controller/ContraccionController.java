@@ -30,4 +30,9 @@ public class ContraccionController {
         return contraccionService.save(contraccionRequest);
     }
 
+    @PutMapping("/{id}")
+    Contraccion update(@RequestBody ContraccionRequest contraccionRequest, @PathVariable Long id) {
+        return contraccionService.update(contraccionRequest, id);
+    }
+
 }

@@ -47,4 +47,9 @@ public class ContraccionService implements com.upc.babyhealth.models.service.Con
 
         return contraccionRepository.save(contraccion);
     }
+
+    @Override
+    public Contraccion update(ContraccionRequest contraccionRequest, Long id) {
+        return null;
+    }
 }

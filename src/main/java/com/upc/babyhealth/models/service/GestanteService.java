@@ -15,7 +15,7 @@ public interface GestanteService {
 	public Gestante findByDni (Long Dni);
 	public Gestante findByUserId(Long id);
 	public Gestante findByUsername(String username);
-
+	public List<Gestante> findAllByObstetra(Long obstetraId);
 
     Gestante update(Gestante nuevaGestante);
 }

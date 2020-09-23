@@ -16,4 +16,5 @@ public interface GestanteRepository extends JpaRepository<Gestante, Long>{
     Gestante findByUsuario(Usuario usuario);
     Gestante findByUsuario_IdUsuario(Long id);
     Gestante findByUsuario_NombreUsuario(String username);
+    List<Gestante> findGestanteByObstetra_Id(Long obstetraId);
 }

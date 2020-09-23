@@ -57,7 +57,10 @@ public class GestanteController {
 		gestanteService.deleteById(id);
 	}
 
-
+	@GetMapping("/obstetras/{id}/gestantes")
+	List<Gestante> findByObstetra(@PathVariable Long id){
+		return gestanteService.findAllByObstetra(id);
+	}
 
 
 

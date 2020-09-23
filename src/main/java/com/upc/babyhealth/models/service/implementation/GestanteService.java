@@ -60,6 +60,11 @@ public class GestanteService implements com.upc.babyhealth.models.service.Gestan
 	}
 
 	@Override
+	public List<Gestante> findAllByObstetra(Long obstetraId) {
+		return gestanteRepo.findGestanteByObstetra_Id(obstetraId);
+	}
+
+	@Override
 	public Gestante update(Gestante nuevaGestante) {
 		//TODO
 		return gestanteRepo.save(nuevaGestante);

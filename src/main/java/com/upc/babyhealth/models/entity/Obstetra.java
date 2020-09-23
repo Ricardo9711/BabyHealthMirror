@@ -44,20 +44,20 @@ public class Obstetra {
 	private String apellidoMaterno;
 	private Long dni;
 
-
+	/*
 	@OneToMany(mappedBy="obstetra",fetch=FetchType.LAZY)
 	private List<Gestante> gestantes;
+
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="FK_CELULAR")
+	private List<Celular> celulares;
+	 */
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
 	@JsonIdentityReference(alwaysAsId = true)
 	@OneToOne
 	@JoinColumn(name = "FK_USUARIO", updatable = false, nullable = false)
 	private Usuario usuario;
-
-
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name="FK_CELULAR")
-	private List<Celular> celulares;
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCentroSalud")
 	@JsonIdentityReference(alwaysAsId = true)

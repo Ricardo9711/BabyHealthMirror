@@ -55,4 +55,9 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
 
         return monitoreRepository.save(monitoreo);
     }
+
+    @Override
+    public Monitoreo update(MonitoreoRequest monitoreoRequest, Long gestanteId, Long monitoreoId) {
+        return null;
+    }
 }
