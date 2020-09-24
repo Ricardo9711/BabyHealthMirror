@@ -39,6 +39,7 @@ public class Gestante {
 	private Long semanaGestacional;
 	private boolean indCompartirUbicacion;
 	private boolean tieneDispositivo;
+	private String token;
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
 	@JsonIdentityReference(alwaysAsId = true)
@@ -77,8 +78,6 @@ public class Gestante {
 		return Objects.equals(this.apellidoMaterno, other.apellidoMaterno)
 			&& Objects.equals(this.apellidoPaterno, other.apellidoPaterno)
 			&& Objects.equals(this.dni, other.dni)
-				//TODO
-				//Falta agregar los campos actualizados
 			&& Objects.equals(this.id, other.id)
 			&& Objects.equals(this.indCompartirUbicacion, other.indCompartirUbicacion)
 			&& Objects.equals(this.nombres, other.nombres)

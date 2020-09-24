@@ -55,7 +55,6 @@ public class JwtUtil {
     public String generateToken(Authentication authentication) {
         Map<String, Object> claims = new HashMap<>();
 
-        //TODO
         SimpleGrantedAuthority role = (SimpleGrantedAuthority) authentication.getAuthorities().toArray()[0];
 
 

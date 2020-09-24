@@ -1,6 +1,7 @@
 package com.upc.babyhealth.models.controller;
 
 import com.upc.babyhealth.models.entity.Monitoreo;
+import com.upc.babyhealth.models.entity.request.MonitoreoPutRequest;
 import com.upc.babyhealth.models.entity.request.MonitoreoRequest;
 import com.upc.babyhealth.models.service.MonitoreoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,12 @@ public class MonitoreoController {
     @PostMapping("/gestantes/{id}/monitoreos")
     public Monitoreo save(@RequestBody MonitoreoRequest monitoreoRequest, @PathVariable Long id){
         return monitoreoService.save(monitoreoRequest, id);
+    }
+
+    //finalizacion de monitoreo
+    @PutMapping("/gestantes/{gestanteId}/monitoreos/{monitoreoId}")
+    public Monitoreo update(@RequestBody MonitoreoPutRequest monitoreoRequest, @PathVariable Long gestanteId, @PathVariable Long monitoreoId){
+        return monitoreoService.update(monitoreoRequest, gestanteId,monitoreoId);
     }
 
 }

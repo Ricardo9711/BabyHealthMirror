@@ -43,7 +43,7 @@ public class Obstetra {
 	private String apellidoPaterno;
 	private String apellidoMaterno;
 	private Long dni;
-
+	private String token;
 	/*
 	@OneToMany(mappedBy="obstetra",fetch=FetchType.LAZY)
 	private List<Gestante> gestantes;
