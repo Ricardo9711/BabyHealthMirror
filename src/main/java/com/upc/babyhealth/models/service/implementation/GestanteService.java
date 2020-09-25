@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.upc.babyhealth.models.entity.Monitoreo;
+import com.upc.babyhealth.models.entity.Obstetra;
 import com.upc.babyhealth.models.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,8 @@ public class GestanteService implements com.upc.babyhealth.models.service.Gestan
 		//TODO
 		return gestanteRepo.save(nuevaGestante);
 	}
+
+
 
 
 }

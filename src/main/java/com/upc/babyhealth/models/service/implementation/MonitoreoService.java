@@ -4,9 +4,11 @@ import com.upc.babyhealth.models.dao.MonitoreoRepository;
 import com.upc.babyhealth.models.entity.Gestante;
 import com.upc.babyhealth.models.entity.Monitoreo;
 import com.upc.babyhealth.models.entity.MonitoreoEstadoEnum;
+import com.upc.babyhealth.models.entity.Obstetra;
 import com.upc.babyhealth.models.entity.request.MonitoreoPutRequest;
 import com.upc.babyhealth.models.entity.request.MonitoreoRequest;
 import com.upc.babyhealth.models.service.GestanteService;
+import com.upc.babyhealth.models.service.ObstetraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,10 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
     private MonitoreoRepository monitoreRepository;
     @Autowired
     private GestanteService gestanteService;
+    @Autowired
+    private PushNotificationService pushNotificationService;
+    @Autowired
+    private ObstetraService obstetraService;
 
     @Override
     public List<Monitoreo> findBySemanaAndGestante(Integer semana, Long gestanteId) {
@@ -49,6 +55,9 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
     @Override
     public Monitoreo save(MonitoreoRequest monitoreoRequest, Long gestanteId) {
         Gestante gestante = gestanteService.findOne(gestanteId);
+        //TODO EXCEPTION
+        //if(gestante==null)
+            //return new Exception();
         Monitoreo monitoreo = new Monitoreo();
         monitoreo.setGestante(gestante);
         monitoreo.setFechaCreacion(ZonedDateTime.now());
@@ -76,6 +85,13 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
             if(monitoreoRequest.getUsuarioModificacion() != null && !monitoreoRequest.getUsuarioModificacion().equals(""))
                 existingMonitoreo.setUsuarioModificacion(monitoreoRequest.getUsuarioModificacion());
             if(monitoreoRequest.getFechaFin() != null && !monitoreoRequest.getFechaFin().toString().equals(""))
+                if(existingMonitoreo.getFechaFin() == null){
+                    //ya ha terminado el monitoreo
+                    Gestante g = gestanteService.findOne(gestanteId);
+                    Obstetra o = obstetraService.findById(g.getObstetra().getId());
+                    //TODO NOTIFICATION
+                    //pushNotificationService.notifyFinishedMonitoring(o.getToken());
+                }
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());
 
             return monitoreRepository.save(existingMonitoreo);

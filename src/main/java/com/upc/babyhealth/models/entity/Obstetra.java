@@ -44,14 +44,12 @@ public class Obstetra {
 	private String apellidoMaterno;
 	private Long dni;
 	private String token;
-	/*
-	@OneToMany(mappedBy="obstetra",fetch=FetchType.LAZY)
-	private List<Gestante> gestantes;
 
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCelular")
+	@JsonIdentityReference(alwaysAsId = true)
+	@OneToOne
 	@JoinColumn(name="FK_CELULAR")
-	private List<Celular> celulares;
-	 */
+	private Celular celular;
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
 	@JsonIdentityReference(alwaysAsId = true)
@@ -65,5 +63,13 @@ public class Obstetra {
 	@JoinColumn(name="FK_CENTRO_SALUD", nullable=false)
 	private CentroSalud centroSalud;
 	
+	/*
+	@OneToMany(mappedBy="obstetra",fetch=FetchType.LAZY)
+	private List<Gestante> gestantes;
+
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="FK_CELULAR")
+	private List<Celular> celulares;
+	 */
 
 }

@@ -39,7 +39,7 @@ public class Gestante {
 	private Long semanaGestacional;
 	private boolean indCompartirUbicacion;
 	private boolean tieneDispositivo;
-	private String token;
+	private String estado;
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
 	@JsonIdentityReference(alwaysAsId = true)
@@ -53,18 +53,19 @@ public class Gestante {
 	@JoinColumn(name="FK_OBSTETRA", nullable=false)
 	private Obstetra obstetra;
 
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCelular")
+	@JsonIdentityReference(alwaysAsId = true)
+	@OneToOne
 	@JoinColumn(name="FK_CELULAR")
-	private List<Celular> celulares;
-	public void addCelular(Celular celular){
-		celulares.add(celular);
-	}
+	private Celular celular;
 
-	@OneToMany(mappedBy="gestante",fetch=FetchType.LAZY)
-	private List<DispositivoGestante> dispositivos;
-	public void addDispositivo(DispositivoGestante dispositivo){
-		dispositivos.add(dispositivo);
-	}
+
+	//@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	//@JoinColumn(name="FK_CELULAR")
+	//private List<Celular> celulares;
+
+	//@OneToMany(mappedBy="gestante",fetch=FetchType.LAZY)
+	//private List<DispositivoGestante> dispositivos;
 
 
 	

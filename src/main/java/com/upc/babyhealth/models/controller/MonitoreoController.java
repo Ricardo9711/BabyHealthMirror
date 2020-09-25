@@ -15,15 +15,6 @@ public class MonitoreoController {
     @Autowired
     private MonitoreoService monitoreoService;
 
-
-    //TODO
-    /*
-    @GetMapping(value="/gestantes/{id}/monitoreos")
-    public List<Monitoreo> findByGestanteId(@PathVariable Long id){
-        return monitoreoService.findByGestante(id);
-    }
-    */
-
     @GetMapping(value="/gestantes/{id}/monitoreos")
     public List<Monitoreo> findByGestanteIdAndSemana(@PathVariable Long id, @RequestParam(required=false) Integer semana){
         if(semana != null) {

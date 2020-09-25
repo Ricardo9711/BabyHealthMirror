@@ -1,5 +1,6 @@
 package com.upc.babyhealth.models.service.implementation;
 
+import com.upc.babyhealth.models.dao.GestanteRepository;
 import com.upc.babyhealth.models.dao.ObstetraRepository;
 import com.upc.babyhealth.models.entity.CentroSalud;
 import com.upc.babyhealth.models.entity.Obstetra;
@@ -12,6 +13,9 @@ public class ObstetraService implements com.upc.babyhealth.models.service.Obstet
 
     @Autowired
     private ObstetraRepository obstetraRepository;
+
+    @Autowired
+    private GestanteRepository gestanteRepository;
 
     @Override
     public Obstetra findByDni(Long dni) {
@@ -66,4 +70,7 @@ public class ObstetraService implements com.upc.babyhealth.models.service.Obstet
         }
         return obstetraRepository.save(existingObstetra);
     }
+
+
+
 }

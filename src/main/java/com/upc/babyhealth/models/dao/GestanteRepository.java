@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.upc.babyhealth.models.entity.Monitoreo;
+import com.upc.babyhealth.models.entity.Obstetra;
 import com.upc.babyhealth.models.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

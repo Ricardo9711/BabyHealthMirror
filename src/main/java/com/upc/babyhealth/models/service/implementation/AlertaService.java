@@ -32,6 +32,8 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
     private FamiliarService familiarService;
     @Autowired
     private TipoAlertaService tipoAlertaService;
+    @Autowired
+    private PushNotificationService pushNotificationService;
 
 
     @Override
@@ -45,59 +47,14 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         alerta.setUsuarioCreacion(alertaRequest.getUsuarioCreacion());
         alerta.setFechaCreacion(ZonedDateTime.now());
 
-
-        //this.sendPushNotifications(alerta);
+        //TODO NOTIFICATION
+        //pushNotificationService.notifyAlert(alerta, alertaRequest.getGestanteToken(),alertaRequest.getObstetraToken());
         this.sendSmsToFam(alerta);
 
         return alertaRepository.save(alerta);
     }
 
-    public boolean sendPushNotifications(Alerta alerta, String gestanteToken, String obstetraToken){
-        String nombreGestante = alerta.getGestante().getNombres() +" "+alerta.getGestante().getApellidoPaterno() + " "+alerta.getGestante().getApellidoMaterno();
-        String title = "Alerta Baby Health";
-        String bodyGestanteEmergency = "Mamita, me siento mal ¡Quiero ir al médico!";
-        String bodyGestanteLabor = "¡Felicidades! Estás por conocer a tu bebé. Por favor, dirígete al Centro de Salud";
-        String bodyObstetraEmergency = "Se han identificado contracciones anormales para la gestante " + nombreGestante + ". Por favor, revisar monitoreo.";
-        String bodyObstetraLabor = "La gestante "+nombreGestante+" ha ingresado a labor de parto. Por favor realizar seguimiento.";
-        String bodyGestante = "";
-        String bodyObstetra = "";
 
-        if(alerta.getTipoAlerta().getNombre().equals("Emergencia")){
-            bodyGestante = bodyGestanteEmergency;
-            bodyObstetra = bodyObstetraEmergency;
-        }else if(alerta.getTipoAlerta().getNombre().equals("Labor de Parto")){
-            bodyGestante = bodyGestanteLabor;
-            bodyObstetra = bodyObstetraLabor;
-        }
-
-        Message messageObstetra = Message.builder()
-                .setToken(obstetraToken)
-                .setNotification(
-                        new Notification(title, bodyObstetra)
-                )
-                .putData("content",title)
-                .putData("body",bodyObstetra)
-                .build();
-
-        Message messageGestante = Message.builder()
-                .setToken(gestanteToken)
-                .setNotification(
-                        new Notification(title, bodyGestante)
-                )
-                .putData("content",title)
-                .putData("body",bodyGestante)
-                .build();
-
-        String responseObstetra = null;
-        String responseGestante = null;
-        try{
-            responseObstetra = FirebaseMessaging.getInstance().send(messageObstetra);
-            responseGestante = FirebaseMessaging.getInstance().send(messageGestante);
-        } catch (FirebaseMessagingException e) {
-            e.printStackTrace();
-        }
-        return true;
-    }
 
     public boolean sendSmsToFam(Alerta alerta){
         String nombreGestante = alerta.getGestante().getNombres() +" "+alerta.getGestante().getApellidoPaterno() + " "+alerta.getGestante().getApellidoMaterno();
