@@ -88,9 +88,10 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                 if(existingMonitoreo.getFechaFin() == null){
                     //ya ha terminado el monitoreo
                     Gestante g = gestanteService.findOne(gestanteId);
+                    String nombreGestante = g.getNombres()+" "+g.getApellidoPaterno()+" "+g.getApellidoMaterno();
                     Obstetra o = obstetraService.findById(g.getObstetra().getId());
                     //TODO NOTIFICATION
-                    //pushNotificationService.notifyFinishedMonitoring(o.getToken());
+                    //pushNotificationService.notifyFinishedMonitoring(o.getToken(), nombreGestante);
                 }
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());
 

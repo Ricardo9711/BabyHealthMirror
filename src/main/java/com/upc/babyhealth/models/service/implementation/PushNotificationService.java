@@ -57,7 +57,24 @@ public class PushNotificationService {
         return true;
     }
 
-    void notifyFinishedMonitoring(String obstetraToken){
+    boolean notifyFinishedMonitoring(String obstetraToken, String nombreGestante){
+        String title = "Baby Health";
+        String body = "La gestante " + nombreGestante + " ha finalizado un monitoreo.";
+        Message messageGestante = Message.builder()
+                .setToken(obstetraToken)
+                .setNotification(
+                        new Notification(title, body)
+                )
+                .putData("content",title)
+                .putData("body",body)
+                .build();
 
+        String response = null;
+        try{
+            response = FirebaseMessaging.getInstance().send(messageGestante);
+        } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }
