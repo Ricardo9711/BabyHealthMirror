@@ -5,6 +5,7 @@ import com.upc.babyhealth.models.entity.DispositivoX;
 import com.upc.babyhealth.models.service.DispositivoService;
 import com.upc.babyhealth.models.service.DispositivoXService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZonedDateTime;
@@ -24,7 +25,7 @@ public class DispositivoController {
     }
 
     @PostMapping("/dispositivos")
-    public Dispositivo save(@RequestBody Dispositivo dispositivo){
+    public ResponseEntity save(@RequestBody Dispositivo dispositivo){
         return dispositivoService.save(dispositivo);
     }
 

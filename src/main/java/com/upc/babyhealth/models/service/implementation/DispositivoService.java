@@ -3,6 +3,8 @@ package com.upc.babyhealth.models.service.implementation;
 import com.upc.babyhealth.models.dao.DispositivoXRepository;
 import com.upc.babyhealth.models.entity.Dispositivo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -30,8 +32,9 @@ public class DispositivoService implements com.upc.babyhealth.models.service.Dis
 	}
 
 	@Override
-	public Dispositivo save(Dispositivo dispositivo) {
+	public ResponseEntity save(Dispositivo dispositivo) {
 
+		try{
 
 		Dispositivo newDispositivo = dispositivoRepo.save(dispositivo);
 
@@ -51,7 +54,17 @@ public class DispositivoService implements com.upc.babyhealth.models.service.Dis
 
 		dispositivoXRepository.SP_NEW_TABLE_DISPOSITIVOX(newDispositivo.getIdDispositivo());
 
-		return newDispositivo;
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(newDispositivo);
+		}catch(Exception e){
+			return ResponseEntity
+					.status(HttpStatus.NOT_ACCEPTABLE)
+					.body(e.getStackTrace());
+		}
+
+		//return newDispositivo;
+
 	}
 
 	@Override
