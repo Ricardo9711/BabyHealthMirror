@@ -9,6 +9,7 @@ import com.upc.babyhealth.models.dao.RolRepository;
 import com.upc.babyhealth.models.dao.UsuarioRepository;
 import com.upc.babyhealth.models.entity.*;
 import com.upc.babyhealth.models.entity.request.SignUpRequest;
+import com.upc.babyhealth.models.entity.request.UsuarioPutRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,20 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
         return usuarioRepository.findByNombreUsuario(username);
     }
 
+    @Override
+    public Usuario update(UsuarioPutRequest usuarioPutRequest, Long id) {
+        Usuario existingUser = usuarioRepository.findById(id).orElse(null);
+        if(existingUser!=null){
+            //update
+            if(usuarioPutRequest.getEmail()!=null && !usuarioPutRequest.getEmail().equals(""))
+                existingUser.setEmail(usuarioPutRequest.getEmail());
+            if(usuarioPutRequest.getNroCelular()!=null && !usuarioPutRequest.getNroCelular().equals(""))
+                existingUser.setNroCelular(usuarioPutRequest.getNroCelular());
+            return usuarioRepository.save(existingUser);
+        }
+        return existingUser;
+    }
+
 
     @Override
     public ResponseEntity<?> registerUser(SignUpRequest signUpRequest) throws Exception{
@@ -61,9 +76,9 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
 
             Usuario newUser = new Usuario();
 
-            newUser.setNombreUsuario(signUpRequest.getNewUser().getNombreUsuario());
+            newUser.setNombreUsuario(signUpRequest.getNewUser().getNombreUsuario().toUpperCase());
             newUser.setContrasenia(passwordEncoder.encode(signUpRequest.getNewUser().getContrasenia()));
-            newUser.setUsuarioCreacion(signUpRequest.getNewUser().getUsuarioCreacion());
+            newUser.setUsuarioCreacion(signUpRequest.getNewUser().getUsuarioCreacion().toUpperCase());
             //setearle un fixed zone UTF-5
             newUser.setFechaCreacion(ZonedDateTime.now());
 

@@ -52,4 +52,9 @@ public class ContraccionService implements com.upc.babyhealth.models.service.Con
     public Contraccion update(ContraccionRequest contraccionRequest, Long id) {
         return null;
     }
+
+    @Override
+    public List<Contraccion> findByMonitoreoId(Long monitoreoId) {
+        return contraccionRepository.findByMonitoreo_IdMonitoreo(monitoreoId);
+    }
 }

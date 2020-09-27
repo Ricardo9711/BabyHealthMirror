@@ -1,10 +1,7 @@
 package com.upc.babyhealth.models.service.implementation;
 
 import com.upc.babyhealth.models.dao.MonitoreoRepository;
-import com.upc.babyhealth.models.entity.Gestante;
-import com.upc.babyhealth.models.entity.Monitoreo;
-import com.upc.babyhealth.models.entity.MonitoreoEstadoEnum;
-import com.upc.babyhealth.models.entity.Obstetra;
+import com.upc.babyhealth.models.entity.*;
 import com.upc.babyhealth.models.entity.request.MonitoreoPutRequest;
 import com.upc.babyhealth.models.entity.request.MonitoreoRequest;
 import com.upc.babyhealth.models.service.GestanteService;
@@ -90,7 +87,9 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     Gestante g = gestanteService.findOne(gestanteId);
                     String nombreGestante = g.getNombres()+" "+g.getApellidoPaterno()+" "+g.getApellidoMaterno();
                     Obstetra o = obstetraService.findById(g.getObstetra().getId());
+                    //o.getCelular();
                     //TODO NOTIFICATION
+                    //falta obtener el token desde el celular
                     //pushNotificationService.notifyFinishedMonitoring(o.getToken(), nombreGestante);
                 }
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());

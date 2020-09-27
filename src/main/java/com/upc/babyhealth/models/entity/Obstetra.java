@@ -43,7 +43,6 @@ public class Obstetra {
 	private String apellidoPaterno;
 	private String apellidoMaterno;
 	private Long dni;
-	private String token;
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCelular")
 	@JsonIdentityReference(alwaysAsId = true)

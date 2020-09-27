@@ -9,30 +9,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/contracciones")
 public class ContraccionController {
 
     @Autowired
     ContraccionService contraccionService;
 
-    @GetMapping("/")
+    @GetMapping("/contracciones")
     List<Contraccion> all(){
         return contraccionService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/contracciones/{id}")
     Contraccion findById(@PathVariable Long id){
         return contraccionService.findById(id);
     }
 
-    @PostMapping()
+    @PostMapping("/contracciones")
     Contraccion save(@RequestBody ContraccionRequest contraccionRequest) throws Exception {
         return contraccionService.save(contraccionRequest);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/contracciones/{id}")
     Contraccion update(@RequestBody ContraccionRequest contraccionRequest, @PathVariable Long id) {
         return contraccionService.update(contraccionRequest, id);
+    }
+
+    @GetMapping("monitoreos/{id}/contracciones")
+    List<Contraccion> findByMonitoreo(@PathVariable Long id){
+        return contraccionService.findByMonitoreoId(id);
     }
 
 }

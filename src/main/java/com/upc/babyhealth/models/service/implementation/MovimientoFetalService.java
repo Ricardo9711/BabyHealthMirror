@@ -5,6 +5,8 @@ import com.upc.babyhealth.models.entity.MovimientoFetal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MovimientoFetalService implements com.upc.babyhealth.models.service.MovimientoFetalService {
 
@@ -25,5 +27,10 @@ public class MovimientoFetalService implements com.upc.babyhealth.models.service
     public MovimientoFetal update(MovimientoFetal updatedMovimientoFetal) {
         //TODO
         return null;
+    }
+
+    @Override
+    public List<MovimientoFetal> findByMonitoreoId(Long monitoreoId) {
+        return movimientoFetalRepository.findByMonitoreo_IdMonitoreo(monitoreoId);
     }
 }

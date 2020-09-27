@@ -40,6 +40,8 @@ public class Gestante {
 	private boolean indCompartirUbicacion;
 	private boolean tieneDispositivo;
 	private String estado;
+	private String latitud;
+	private String longitud;
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
 	@JsonIdentityReference(alwaysAsId = true)

@@ -3,10 +3,9 @@ package com.upc.babyhealth.models.controller;
 import com.upc.babyhealth.models.entity.MovimientoFetal;
 import com.upc.babyhealth.models.service.MovimientoFetalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class MovimientoFetalController {
@@ -24,5 +23,9 @@ public class MovimientoFetalController {
         return movimientoFetalService.save(movimientoFetal);
     }
 
+    @GetMapping("/monitoreos/{id}/movimiento-fetal")
+    List<MovimientoFetal>findByMonitoreo(@PathVariable Long id){
+        return movimientoFetalService.findByMonitoreoId(id);
+    }
 
 }

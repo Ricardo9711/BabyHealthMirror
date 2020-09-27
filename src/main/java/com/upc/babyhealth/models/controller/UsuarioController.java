@@ -2,6 +2,7 @@ package com.upc.babyhealth.models.controller;
 
 import com.upc.babyhealth.models.entity.Usuario;
 import com.upc.babyhealth.models.entity.request.SignUpRequest;
+import com.upc.babyhealth.models.entity.request.UsuarioPutRequest;
 import com.upc.babyhealth.models.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,10 @@ public class UsuarioController {
     @GetMapping
     public List<Usuario> findAll(){
         return usuarioService.findAll();
+    }
+
+    @PutMapping("/{id}")
+    public Usuario update(@RequestBody UsuarioPutRequest usuario, @PathVariable Long id){
+        return usuarioService.update(usuario, id);
     }
 }
