@@ -35,7 +35,7 @@ public class DispositivoService implements com.upc.babyhealth.models.service.Dis
 
 		Dispositivo newDispositivo = dispositivoRepo.save(dispositivo);
 
-
+		/*
 		if(newDispositivo != null){
 
 			DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -47,6 +47,9 @@ public class DispositivoService implements com.upc.babyhealth.models.service.Dis
 			Map<String, Object> out = jdbcCall.execute(newDispositivo.getIdDispositivo());
 
 		}
+		*/
+
+		dispositivoXRepository.SP_NEW_TABLE_DISPOSITIVOX(newDispositivo.getIdDispositivo());
 
 		return newDispositivo;
 	}
