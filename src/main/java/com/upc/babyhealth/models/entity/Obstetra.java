@@ -46,7 +46,7 @@ public class Obstetra {
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCelular")
 	@JsonIdentityReference(alwaysAsId = true)
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="FK_CELULAR")
 	private Celular celular;
 
@@ -61,7 +61,8 @@ public class Obstetra {
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name="FK_CENTRO_SALUD", nullable=false)
 	private CentroSalud centroSalud;
-	
+
+
 	/*
 	@OneToMany(mappedBy="obstetra",fetch=FetchType.LAZY)
 	private List<Gestante> gestantes;

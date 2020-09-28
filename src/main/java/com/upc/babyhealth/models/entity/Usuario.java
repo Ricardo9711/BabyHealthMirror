@@ -42,7 +42,7 @@ public class Usuario {
 	private String usuarioModificacion;
 	private String email;
 	private String nroCelular;
-
+	private ZonedDateTime aceptoTerminos;
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idRol")
 	@JsonIdentityReference(alwaysAsId = true)

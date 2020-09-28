@@ -26,7 +26,7 @@ public class PushNotificationService {
     public boolean notifyAlert(Alerta alerta, String gestanteToken, String obstetraToken){
         String nombreGestante = alerta.getGestante().getNombres() +" "+alerta.getGestante().getApellidoPaterno() + " "+alerta.getGestante().getApellidoMaterno();
         String title = "Alerta Baby Health";
-        String bodyGestanteEmergency = "Mamita, me siento mal ¡Quiero ir al médico!";
+        String bodyGestanteEmergency = "Mamita, me siento mal, comunícate con mi obstetra.";
         String bodyGestanteLabor = "¡Felicidades! Estás por conocer a tu bebé. Por favor, dirígete al Centro de Salud";
         String bodyObstetraEmergency = "Se han identificado contracciones anormales para la gestante " + nombreGestante + ". Por favor, revisar monitoreo.";
         String bodyObstetraLabor = "La gestante "+nombreGestante+" ha ingresado a labor de parto. Por favor realizar seguimiento.";

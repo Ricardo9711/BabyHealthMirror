@@ -18,4 +18,6 @@ public class AlertaController {
     public Alerta sendAlert(@RequestBody AlertaRequest alerta){
         return alertaService.sendAlert(alerta);
     }
+
+    //TODO PUT
 }
