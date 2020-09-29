@@ -1,6 +1,7 @@
 package com.upc.babyhealth.models.service;
 
 import com.upc.babyhealth.models.entity.Usuario;
+import com.upc.babyhealth.models.entity.request.ChangePasswordRequest;
 import com.upc.babyhealth.models.entity.request.SignUpRequest;
 import com.upc.babyhealth.models.entity.request.UsuarioPutRequest;
 import org.springframework.http.ResponseEntity;
@@ -18,4 +19,8 @@ public interface UsuarioService {
     Usuario findByUsername(String username);
 
     Usuario update(UsuarioPutRequest usuario, Long id);
+
+    Usuario changePassword(Long id, ChangePasswordRequest request);
+
+    Usuario resetPassword(Long id);
 }

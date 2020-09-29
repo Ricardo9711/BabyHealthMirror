@@ -1,6 +1,7 @@
 package com.upc.babyhealth.models.controller;
 
 import com.upc.babyhealth.models.entity.Usuario;
+import com.upc.babyhealth.models.entity.request.ChangePasswordRequest;
 import com.upc.babyhealth.models.entity.request.SignUpRequest;
 import com.upc.babyhealth.models.entity.request.UsuarioPutRequest;
 import com.upc.babyhealth.models.service.UsuarioService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.ws.rs.Path;
 import java.util.List;
 
 @RestController
@@ -36,5 +38,16 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public Usuario update(@RequestBody UsuarioPutRequest usuario, @PathVariable Long id){
         return usuarioService.update(usuario, id);
+    }
+
+    //HABILITARLO TAMBIEN PARA GESTANTES Y OBSTETRAS
+    @PutMapping("/{id}/contrasenia")
+    public Usuario changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest request){
+        return usuarioService.changePassword(id, request);
+    }
+
+    @PostMapping("/{id}/contrasenia")
+    public Usuario resetPassword(@PathVariable Long id){
+        return usuarioService.resetPassword(id);
     }
 }

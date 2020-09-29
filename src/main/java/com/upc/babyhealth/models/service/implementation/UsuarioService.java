@@ -8,6 +8,7 @@ import com.upc.babyhealth.models.dao.ObstetraRepository;
 import com.upc.babyhealth.models.dao.RolRepository;
 import com.upc.babyhealth.models.dao.UsuarioRepository;
 import com.upc.babyhealth.models.entity.*;
+import com.upc.babyhealth.models.entity.request.ChangePasswordRequest;
 import com.upc.babyhealth.models.entity.request.SignUpRequest;
 import com.upc.babyhealth.models.entity.request.UsuarioPutRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,28 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
             return usuarioRepository.save(existingUser);
         }
         return existingUser;
+    }
+
+    @Override
+    public Usuario changePassword(Long id, ChangePasswordRequest request) {
+        Usuario existingUser = usuarioRepository.findById(id).orElse(null);
+        if(existingUser != null){
+            if(passwordEncoder.matches(request.getOldPassword(),existingUser.getContrasenia()));{
+                existingUser.setContrasenia(passwordEncoder.encode(request.getNewPassword()));
+                return usuarioRepository.save(existingUser);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Usuario resetPassword(Long id) {
+        Usuario existingUser = usuarioRepository.findById(id).orElse(null);
+        if(existingUser != null){
+            existingUser.setContrasenia(passwordEncoder.encode("Babyhealth123"));
+            return usuarioRepository.save(existingUser);
+        }
+        return null;
     }
 
 

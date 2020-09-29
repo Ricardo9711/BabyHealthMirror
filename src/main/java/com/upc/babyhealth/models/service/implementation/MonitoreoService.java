@@ -51,7 +51,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
     public Monitoreo findLastMonitoreo(Long gestanteId) {
         Gestante gestante = new Gestante();
         gestante.setId(gestanteId);
-        return monitoreRepository.findTopByGestanteAndEstadoOrderByFechaCreacionDesc(gestante, "F");
+        return monitoreRepository.findTopByGestanteAndEstadoOrderByFechaCreacionDesc(gestante, MonitoreoEstadoEnum.F );
     }
 
     @Override
@@ -164,6 +164,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
 
                 }
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());
+                existingMonitoreo.setEstado(MonitoreoEstadoEnum.F);
                 existingMonitoreo.setFechaModificacion(ZonedDateTime.now());
             }
 

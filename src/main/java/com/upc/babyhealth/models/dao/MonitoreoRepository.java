@@ -2,6 +2,7 @@ package com.upc.babyhealth.models.dao;
 
 import com.upc.babyhealth.models.entity.Gestante;
 import com.upc.babyhealth.models.entity.Monitoreo;
+import com.upc.babyhealth.models.entity.MonitoreoEstadoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.ZonedDateTime;
@@ -13,5 +14,5 @@ public interface MonitoreoRepository extends JpaRepository<Monitoreo, Long> {
 
     //recuperar el monitoreo mas reciente
     //ordenar por fecha creacion
-    public Monitoreo findTopByGestanteAndEstadoOrderByFechaCreacionDesc(Gestante gestante, String estado);
+    public Monitoreo findTopByGestanteAndEstadoOrderByFechaCreacionDesc(Gestante gestante, MonitoreoEstadoEnum estado);
 }
