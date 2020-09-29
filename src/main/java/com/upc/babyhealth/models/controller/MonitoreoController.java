@@ -27,7 +27,8 @@ public class MonitoreoController {
 
     @GetMapping("/gestantes/{id}/monitoreos/last")
     public Monitoreo findLastMonitoreoByGestanteId(@PathVariable Long id){
-        return monitoreoService.findLastMonitoreo(id);
+        Monitoreo m = monitoreoService.findLastMonitoreo(id);
+        return m;
     }
 
     @PostMapping("/gestantes/{id}/monitoreos")

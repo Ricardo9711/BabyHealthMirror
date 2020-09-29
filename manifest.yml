@@ -5,5 +5,5 @@ applications:
   path: target/babyhealth-1.0-version.war
   instances: 1
   services:
-    - schemababyhealth
+    - sqbabyhealth
   buildpack: java_buildpack

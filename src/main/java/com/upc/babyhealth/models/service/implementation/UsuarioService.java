@@ -68,7 +68,7 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
     public Usuario changePassword(Long id, ChangePasswordRequest request) {
         Usuario existingUser = usuarioRepository.findById(id).orElse(null);
         if(existingUser != null){
-            if(passwordEncoder.matches(request.getOldPassword(),existingUser.getContrasenia()));{
+            if(passwordEncoder.matches(request.getOldPassword(),existingUser.getContrasenia())){
                 existingUser.setContrasenia(passwordEncoder.encode(request.getNewPassword()));
                 return usuarioRepository.save(existingUser);
             }

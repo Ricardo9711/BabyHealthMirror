@@ -12,6 +12,7 @@ import com.upc.babyhealth.models.service.TipoAlertaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -46,7 +47,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
         return monitoreRepository.findByGestante_Id(gestanteId);
     }
 
-    //TODO TEST
+
     @Override
     public Monitoreo findLastMonitoreo(Long gestanteId) {
         Gestante gestante = new Gestante();
@@ -106,15 +107,19 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     //Logica de monitoreos
                     Long diff = ChronoUnit.DAYS.between(g.getFechaInicioGestacion(), ZonedDateTime.now());
                     Double semanas = Double.valueOf(diff)/7;
-                    existingMonitoreo.setSemanaGestacion(Integer.valueOf(String.valueOf(semanas)));
+                    existingMonitoreo.setSemanaGestacion(semanas.intValue());
 
                     //duracion promedio
                     List<Contraccion> contracciones = contraccionService.findByMonitoreoId(existingMonitoreo.getIdMonitoreo());
+
+
                     double promedio = 0;
                     for (Contraccion c: contracciones) {
                         promedio += c.getDuracion();
                     }
-                    promedio = promedio / contracciones.size();
+                    if(contracciones.size() > 0){
+                        promedio = promedio / contracciones.size();
+                    }
                     existingMonitoreo.setDuracionPromedio(promedio);
                     existingMonitoreo.setFrecuenciaPromedio(promedio);
 
@@ -126,7 +131,9 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     for(int i = 1; i < contracciones.size(); i++){
                         intervaloPromedio += ChronoUnit.MINUTES.between(contracciones.get(i-1).getFechaFin(),contracciones.get(i).getFechaInicio());
                     }
-                    intervaloPromedio = intervaloPromedio / (contracciones.size() - 1);
+                    if(contracciones.size() > 2){
+                        intervaloPromedio = intervaloPromedio / (contracciones.size() - 1);
+                    }
                     existingMonitoreo.setTiempoEcPromedio(intervaloPromedio);
 
                     //Calcular promedio de intensidad
@@ -134,7 +141,8 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     for(int i = 1; i < contracciones.size();i++){
                         intensidadPromedio += contracciones.get(i).getIntensidad();
                     }
-                    intensidadPromedio = intensidadPromedio / contracciones.size();
+                    if(contracciones.size()>0)
+                        intensidadPromedio = intensidadPromedio / contracciones.size();
                     existingMonitoreo.setIntensidadPromedio(intensidadPromedio);
 
                     //Alertar
