@@ -2,6 +2,8 @@ package com.upc.babyhealth.models.service.implementation;
 
 import com.upc.babyhealth.models.dao.MovimientoFetalRepository;
 import com.upc.babyhealth.models.entity.MovimientoFetal;
+import com.upc.babyhealth.models.entity.request.MonitoreoPutRequest;
+import com.upc.babyhealth.models.service.MonitoreoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ public class MovimientoFetalService implements com.upc.babyhealth.models.service
 
     @Autowired
     private MovimientoFetalRepository movimientoFetalRepository;
+    @Autowired
+    private MonitoreoService monitoreoService;
 
     @Override
     public MovimientoFetal findById(Long id) {
@@ -20,7 +24,11 @@ public class MovimientoFetalService implements com.upc.babyhealth.models.service
 
     @Override
     public MovimientoFetal save(MovimientoFetal movimientoFetal) {
-        return movimientoFetalRepository.save(movimientoFetal);
+        MovimientoFetal mf = movimientoFetalRepository.save(movimientoFetal);
+        if(mf != null) {
+            monitoreoService.addMovFetal(mf.getMonitoreo().getIdMonitoreo());
+        }
+        return mf;
     }
 
     @Override

@@ -13,5 +13,5 @@ public interface MonitoreoRepository extends JpaRepository<Monitoreo, Long> {
 
     //recuperar el monitoreo mas reciente
     //ordenar por fecha creacion
-    public Monitoreo findTopByGestanteOrderByFechaCreacionDesc(Gestante gestante);
+    public Monitoreo findTopByGestanteAndEstadoOrderByFechaCreacionDesc(Gestante gestante, String estado);
 }

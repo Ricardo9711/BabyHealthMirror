@@ -31,7 +31,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "gestantes","celulares"})
 public class Obstetra {
 	
@@ -61,7 +60,6 @@ public class Obstetra {
 	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name="FK_CENTRO_SALUD", nullable=false)
 	private CentroSalud centroSalud;
-
 
 	/*
 	@OneToMany(mappedBy="obstetra",fetch=FetchType.LAZY)

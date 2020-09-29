@@ -20,4 +20,5 @@ public class MonitoreoPutRequest {
     private ZonedDateTime fechaModificacion; //va a ser igual a la fecha fin
     private Integer semanaGestacion; //semana de gestacion del monitoreo
     private String usuarioModificacion;
+    private Integer cantidadMovFetales;
 }

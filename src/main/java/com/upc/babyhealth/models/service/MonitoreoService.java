@@ -13,4 +13,5 @@ public interface MonitoreoService {
     public Monitoreo findById(Long monitoreoId);
     Monitoreo save(MonitoreoRequest monitoreoRequest, Long gestanteId);
     Monitoreo update(MonitoreoPutRequest monitoreoRequest, Long gestanteId, Long monitoreoId);
+    Monitoreo addMovFetal(Long monitoreoId);
 }

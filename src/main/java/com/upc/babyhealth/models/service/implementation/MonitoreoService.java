@@ -5,6 +5,7 @@ import com.upc.babyhealth.models.entity.*;
 import com.upc.babyhealth.models.entity.request.AlertaRequest;
 import com.upc.babyhealth.models.entity.request.MonitoreoPutRequest;
 import com.upc.babyhealth.models.entity.request.MonitoreoRequest;
+import com.upc.babyhealth.models.service.ContraccionService;
 import com.upc.babyhealth.models.service.GestanteService;
 import com.upc.babyhealth.models.service.ObstetraService;
 import com.upc.babyhealth.models.service.TipoAlertaService;
@@ -30,6 +31,9 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
     private AlertaService alertaService;
     @Autowired
     private TipoAlertaService tipoAlertaService;
+    @Autowired
+    private ContraccionService contraccionService;
+
     @Override
     public List<Monitoreo> findBySemanaAndGestante(Integer semana, Long gestanteId) {
         Gestante gestante = new Gestante();
@@ -42,11 +46,12 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
         return monitoreRepository.findByGestante_Id(gestanteId);
     }
 
+    //TODO TEST
     @Override
     public Monitoreo findLastMonitoreo(Long gestanteId) {
         Gestante gestante = new Gestante();
         gestante.setId(gestanteId);
-        return monitoreRepository.findTopByGestanteOrderByFechaCreacionDesc(gestante);
+        return monitoreRepository.findTopByGestanteAndEstadoOrderByFechaCreacionDesc(gestante, "F");
     }
 
     @Override
@@ -67,6 +72,8 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
         monitoreo.setFechaInicio(monitoreo.getFechaCreacion());
         monitoreo.setEstado(MonitoreoEstadoEnum.I);
         monitoreo.setUsuarioCreacion(monitoreoRequest.getUsuarioCreacion());
+        monitoreo.setCantidadMovFetales(0);
+        monitoreo.setCantidadContracciones(0);
 
         return monitoreRepository.save(monitoreo);
     }
@@ -75,8 +82,8 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
     public Monitoreo update(MonitoreoPutRequest monitoreoRequest, Long gestanteId, Long monitoreoId) {
         Monitoreo existingMonitoreo = monitoreRepository.findById(monitoreoId).orElse(null);
         if(existingMonitoreo != null){
-            if(monitoreoRequest.getContraccionesPromedio() != null && !monitoreoRequest.getContraccionesPromedio().toString().equals(""))
-                existingMonitoreo.setContraccionesPromedio(monitoreoRequest.getContraccionesPromedio());
+            //if(monitoreoRequest.getContraccionesPromedio() != null && !monitoreoRequest.getContraccionesPromedio().toString().equals(""))
+            //  existingMonitoreo.setContraccionesPromedio(monitoreoRequest.getContraccionesPromedio());
             if(monitoreoRequest.getFrecuenciaPromedio() != null && !monitoreoRequest.getFrecuenciaPromedio().toString().equals(""))
                 existingMonitoreo.setFrecuenciaPromedio(monitoreoRequest.getFrecuenciaPromedio());
             if(monitoreoRequest.getTiempoEcPromedio() != null && !monitoreoRequest.getTiempoEcPromedio().toString().equals(""))
@@ -89,47 +96,90 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                 existingMonitoreo.setUsuarioModificacion(monitoreoRequest.getUsuarioModificacion());
             if(monitoreoRequest.getFechaFin() != null && !monitoreoRequest.getFechaFin().toString().equals("")){
                 if(existingMonitoreo.getFechaFin() == null){
+
                     //ya ha terminado el monitoreo
                     Gestante g = gestanteService.findOne(gestanteId);
                     String nombreGestante = g.getNombres()+" "+g.getApellidoPaterno()+" "+g.getApellidoMaterno();
                     Obstetra o = obstetraService.findById(g.getObstetra().getId());
 
-                    /*
-                    //Logica de moniitoreos
-                    //pushNotificationService.notifyFinishedMonitoring(o.getCelular().getFirebaseToken(), nombreGestante);
-                    Long semanas = ChronoUnit.DAYS.between(g.getFechaInicioGestacion(), ZonedDateTime.now());
-                    semanas = semanas / 7;
 
+                    //Logica de monitoreos
+                    Long diff = ChronoUnit.DAYS.between(g.getFechaInicioGestacion(), ZonedDateTime.now());
+                    Double semanas = Double.valueOf(diff)/7;
+                    existingMonitoreo.setSemanaGestacion(Integer.valueOf(String.valueOf(semanas)));
+
+                    //duracion promedio
+                    List<Contraccion> contracciones = contraccionService.findByMonitoreoId(existingMonitoreo.getIdMonitoreo());
+                    double promedio = 0;
+                    for (Contraccion c: contracciones) {
+                        promedio += c.getDuracion();
+                    }
+                    promedio = promedio / contracciones.size();
+                    existingMonitoreo.setDuracionPromedio(promedio);
+                    existingMonitoreo.setFrecuenciaPromedio(promedio);
+
+                    //cantidad contracciones
+                    existingMonitoreo.setCantidadContracciones(contracciones.size());
+
+                    //Promedio de intervalo entre contracciones
+                    double intervaloPromedio = 0;
+                    for(int i = 1; i < contracciones.size(); i++){
+                        intervaloPromedio += ChronoUnit.MINUTES.between(contracciones.get(i-1).getFechaFin(),contracciones.get(i).getFechaInicio());
+                    }
+                    intervaloPromedio = intervaloPromedio / (contracciones.size() - 1);
+                    existingMonitoreo.setTiempoEcPromedio(intervaloPromedio);
+
+                    //Calcular promedio de intensidad
+                    double intensidadPromedio = 0;
+                    for(int i = 1; i < contracciones.size();i++){
+                        intensidadPromedio += contracciones.get(i).getIntensidad();
+                    }
+                    intensidadPromedio = intensidadPromedio / contracciones.size();
+                    existingMonitoreo.setIntensidadPromedio(intensidadPromedio);
+
+                    //Alertar
                     AlertaRequest a = new AlertaRequest();
                     a.setGestanteId(g.getId());
                     a.setUsuarioCreacion("MASTER");
-
                     if(semanas < 30){
-                        if(existingMonitoreo.getContraccionesPromedio() > 2){
+                        if(existingMonitoreo.getCantidadContracciones() > 2){
                             //alertar emergencia
                             a.setTipoAlerta("EMERGENCIA");
                             alertaService.sendAlert(a);
                         }
                     }else{
-                        if(existingMonitoreo.getContraccionesPromedio()==3 || existingMonitoreo.getContraccionesPromedio()==4)
+                        if(existingMonitoreo.getCantidadContracciones() == 3 || existingMonitoreo.getCantidadContracciones() == 4)
                         {
                             //alertar emergencia
                             a.setTipoAlerta("EMERGENCIA");
                             alertaService.sendAlert(a);
                         }
-                        else if(existingMonitoreo.getContraccionesPromedio()>5){
+                        else if(existingMonitoreo.getCantidadContracciones() > 5){
                             //alertar labor de parto
                             a.setTipoAlerta("LABOR DE PARTO");
                             alertaService.sendAlert(a);
                         }
                     }
-                     */
+
+
                 }
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());
+                existingMonitoreo.setFechaModificacion(ZonedDateTime.now());
             }
 
             return monitoreRepository.save(existingMonitoreo);
         }
         return null;
+    }
+
+    @Override
+    public Monitoreo addMovFetal(Long monitoreoId) {
+        Monitoreo m = monitoreRepository.findById(monitoreoId).orElse(null);
+        if(m != null){
+            m.setCantidadMovFetales(m.getCantidadMovFetales()+1);
+            monitoreRepository.save(m);
+        }
+
+        return m;
     }
 }
