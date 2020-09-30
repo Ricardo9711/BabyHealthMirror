@@ -63,9 +63,9 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         List<Familiar> familiares = familiarService.findAllByGestante(alerta.getGestante().getId());
 
         String smsBody = "default message";
-        if(alerta.getTipoAlerta().getNombre().equals("Emergencia")){
+        if(alerta.getTipoAlerta().getNombre().equals("EMERGENCIA")){
             smsBody = emergencyBody;
-        }else if(alerta.getTipoAlerta().getNombre().equals("Labor de Parto")){
+        }else if(alerta.getTipoAlerta().getNombre().equals("LABOR DE PARTO")){
             smsBody = laborBody;
         }
 

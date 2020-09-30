@@ -97,7 +97,6 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                 existingMonitoreo.setUsuarioModificacion(monitoreoRequest.getUsuarioModificacion());
             if(monitoreoRequest.getFechaFin() != null && !monitoreoRequest.getFechaFin().toString().equals("")){
                 if(existingMonitoreo.getFechaFin() == null){
-
                     //ya ha terminado el monitoreo
                     Gestante g = gestanteService.findOne(gestanteId);
                     String nombreGestante = g.getNombres()+" "+g.getApellidoPaterno()+" "+g.getApellidoMaterno();
@@ -114,10 +113,10 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
 
 
                     double promedio = 0;
-                    for (Contraccion c: contracciones) {
-                        promedio += c.getDuracion();
-                    }
                     if(contracciones.size() > 0){
+                        for (Contraccion c: contracciones) {
+                            promedio += c.getDuracion();
+                        }
                         promedio = promedio / contracciones.size();
                     }
                     existingMonitoreo.setDuracionPromedio(promedio);
@@ -138,11 +137,13 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
 
                     //Calcular promedio de intensidad
                     double intensidadPromedio = 0;
-                    for(int i = 1; i < contracciones.size();i++){
-                        intensidadPromedio += contracciones.get(i).getIntensidad();
-                    }
                     if(contracciones.size()>0)
+                    {
+                        for(int i = 0; i < contracciones.size();i++){
+                            intensidadPromedio += contracciones.get(i).getIntensidad();
+                        }
                         intensidadPromedio = intensidadPromedio / contracciones.size();
+                    }
                     existingMonitoreo.setIntensidadPromedio(intensidadPromedio);
 
                     //Alertar
@@ -168,8 +169,6 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                             alertaService.sendAlert(a);
                         }
                     }
-
-
                 }
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());
                 existingMonitoreo.setEstado(MonitoreoEstadoEnum.F);
