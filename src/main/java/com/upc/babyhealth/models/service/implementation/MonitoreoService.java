@@ -120,10 +120,10 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                         promedio = promedio / contracciones.size();
                     }
                     existingMonitoreo.setDuracionPromedio(promedio);
-                    existingMonitoreo.setFrecuenciaPromedio(promedio);
 
                     //cantidad contracciones
                     existingMonitoreo.setCantidadContracciones(contracciones.size());
+                    existingMonitoreo.setFrecuenciaPromedio((double) contracciones.size());
 
                     //Promedio de intervalo entre contracciones
                     double intervaloPromedio = 0;
@@ -150,10 +150,12 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     AlertaRequest a = new AlertaRequest();
                     a.setGestanteId(g.getId());
                     a.setUsuarioCreacion("MASTER");
+
                     if(semanas < 30){
                         if(existingMonitoreo.getCantidadContracciones() > 2){
                             //alertar emergencia
                             a.setTipoAlerta("EMERGENCIA");
+                            existingMonitoreo.setEstadoGestante("EMERGENCIA");
                             alertaService.sendAlert(a);
                         }
                     }else{
@@ -161,17 +163,20 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                         {
                             //alertar emergencia
                             a.setTipoAlerta("EMERGENCIA");
+                            existingMonitoreo.setEstadoGestante("EMERGENCIA");
                             alertaService.sendAlert(a);
                         }
                         else if(existingMonitoreo.getCantidadContracciones() > 5){
                             //alertar labor de parto
                             a.setTipoAlerta("LABOR DE PARTO");
+                            existingMonitoreo.setEstadoGestante("LABOR DE PARTO");
                             alertaService.sendAlert(a);
                         }
                     }
                 }
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());
                 existingMonitoreo.setEstado(MonitoreoEstadoEnum.F);
+                existingMonitoreo.setEstadoGestante("ESTABLE");
                 existingMonitoreo.setFechaModificacion(ZonedDateTime.now());
             }
 

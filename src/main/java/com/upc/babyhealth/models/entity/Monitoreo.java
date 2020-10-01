@@ -41,6 +41,7 @@ public class Monitoreo {
 	private Integer semanaGestacion; //semana de gestacion del monitoreo
 	private Integer cantidadMovFetales;
 	private Integer cantidadContracciones;
+	private String estadoGestante;
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)

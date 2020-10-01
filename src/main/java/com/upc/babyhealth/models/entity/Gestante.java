@@ -43,8 +43,8 @@ public class Gestante {
 	private String latitud;
 	private String longitud;
 
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
-	@JsonIdentityReference(alwaysAsId = true)
+	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
+	//@JsonIdentityReference(alwaysAsId = true)
 	@OneToOne
 	@JoinColumn(name = "FK_USUARIO", updatable = false, nullable = false)
 	private Usuario usuario;

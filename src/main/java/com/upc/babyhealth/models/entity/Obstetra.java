@@ -49,8 +49,8 @@ public class Obstetra {
 	@JoinColumn(name="FK_CELULAR")
 	private Celular celular;
 
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
-	@JsonIdentityReference(alwaysAsId = true)
+	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
+	//@JsonIdentityReference(alwaysAsId = true)
 	@OneToOne
 	@JoinColumn(name = "FK_USUARIO", updatable = false, nullable = false)
 	private Usuario usuario;

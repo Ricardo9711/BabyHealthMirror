@@ -10,16 +10,5 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MonitoreoRequest {
-    //private ZonedDateTime fechaInicio;
-    //private ZonedDateTime fechaFin;
-    //private MonitoreoEstadoEnum estado;
-    //private Double contraccionesPromedio;	//cuantas contracciones hay en 10 minutos. 10 min es el maximo de un monitoreo
-    //private Double frecuenciaPromedio; //frecuencia va a ser igual a contraccionesPromedio
-    //private Double tiempoEcPromedio; //Espacio de tiempo entre el fin de una contraccion y el inicio del otro
-    //private Double intensidadPromedio; //Intensidad promedio: 0 si es manual y otro
-    //private ZonedDateTime fechaCreacion; //igual a la fecha inicio
-    //private ZonedDateTime fechaModificacion; //va a ser igual a la fecha fin
     private String usuarioCreacion;
-    //private String usuarioModificacion;
-    //private Integer semanaGestacion; //semana de gestacion del monitoreo
 }
