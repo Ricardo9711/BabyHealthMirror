@@ -69,7 +69,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
             //return new Exception();
         Monitoreo monitoreo = new Monitoreo();
         monitoreo.setGestante(gestante);
-        monitoreo.setFechaCreacion(ZonedDateTime.now());
+        monitoreo.setFechaCreacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
         monitoreo.setFechaInicio(monitoreo.getFechaCreacion());
         monitoreo.setEstado(MonitoreoEstadoEnum.I);
         monitoreo.setUsuarioCreacion(monitoreoRequest.getUsuarioCreacion());
@@ -101,10 +101,10 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     Gestante g = gestanteService.findOne(gestanteId);
                     String nombreGestante = g.getNombres()+" "+g.getApellidoPaterno()+" "+g.getApellidoMaterno();
                     Obstetra o = obstetraService.findById(g.getObstetra().getId());
-
+                    boolean fine = true;
 
                     //Logica de monitoreos
-                    Long diff = ChronoUnit.DAYS.between(g.getFechaInicioGestacion(), ZonedDateTime.now());
+                    Long diff = ChronoUnit.DAYS.between(g.getFechaInicioGestacion(), ZonedDateTime.now(ZoneId.of("America/Lima")));
                     Double semanas = Double.valueOf(diff)/7;
                     existingMonitoreo.setSemanaGestacion(semanas.intValue());
 
@@ -116,6 +116,8 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     if(contracciones.size() > 0){
                         for (Contraccion c: contracciones) {
                             promedio += c.getDuracion();
+                            if ( c.getNivel() == "MODERADO" || c.getNivel() == "ALTO" )
+                                fine = false;
                         }
                         promedio = promedio / contracciones.size();
                     }
@@ -128,10 +130,11 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     //Promedio de intervalo entre contracciones
                     double intervaloPromedio = 0;
                     for(int i = 1; i < contracciones.size(); i++){
-                        intervaloPromedio += ChronoUnit.MINUTES.between(contracciones.get(i-1).getFechaFin(),contracciones.get(i).getFechaInicio());
+                        intervaloPromedio += ChronoUnit.SECONDS.between(contracciones.get(i-1).getFechaFin(),contracciones.get(i).getFechaInicio());
                     }
                     if(contracciones.size() > 2){
                         intervaloPromedio = intervaloPromedio / (contracciones.size() - 1);
+                        intervaloPromedio = Math.round(intervaloPromedio*10.0)/(10.0);
                     }
                     existingMonitoreo.setTiempoEcPromedio(intervaloPromedio);
 
@@ -151,14 +154,19 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     a.setGestanteId(g.getId());
                     a.setUsuarioCreacion("MASTER");
 
-                    if(semanas < 30){
+                    if( (existingMonitoreo.getCantidadMovFetales() < g.getPatronMovimientos()) || !fine)  {
+                        a.setTipoAlerta("EMERGENCIA");
+                        existingMonitoreo.setEstadoGestante("EMERGENCIA");
+                    }
+                    else if(semanas < 30){
                         if(existingMonitoreo.getCantidadContracciones() > 2){
                             //alertar emergencia
                             a.setTipoAlerta("EMERGENCIA");
                             existingMonitoreo.setEstadoGestante("EMERGENCIA");
                             alertaService.sendAlert(a);
                         }
-                    }else{
+                    }
+                    else if( semanas >= 30 ){
                         if(existingMonitoreo.getCantidadContracciones() == 3 || existingMonitoreo.getCantidadContracciones() == 4)
                         {
                             //alertar emergencia
@@ -173,11 +181,18 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                             alertaService.sendAlert(a);
                         }
                     }
+                    else{
+                        //TODO MONITOREO ALERTA
+                        a.setTipoAlerta("MONITOREO");
+                        existingMonitoreo.setEstadoGestante("ESTABLE");
+                        alertaService.sendAlert(a);
+                    }
+
                 }
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());
                 existingMonitoreo.setEstado(MonitoreoEstadoEnum.F);
                 existingMonitoreo.setEstadoGestante("ESTABLE");
-                existingMonitoreo.setFechaModificacion(ZonedDateTime.now());
+                existingMonitoreo.setFechaModificacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
             }
 
             return monitoreRepository.save(existingMonitoreo);

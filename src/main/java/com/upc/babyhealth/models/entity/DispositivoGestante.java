@@ -29,6 +29,7 @@ public class DispositivoGestante {
 	private Long idDispositivoGestante;
 	private ZonedDateTime fechaDesde;
 	private ZonedDateTime fechaHasta;
+	//TODO FALTA DEFINIR ESTADOS ('A': Activo / 'N': 'Inactivo')
 	private String estado;
 	private ZonedDateTime fechaCreacion;
 	private ZonedDateTime fechaModificacion;

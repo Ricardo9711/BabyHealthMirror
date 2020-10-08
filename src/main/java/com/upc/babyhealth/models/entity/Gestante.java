@@ -42,6 +42,7 @@ public class Gestante {
 	private String estado;
 	private String latitud;
 	private String longitud;
+	private Integer patronMovimientos;
 
 	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
 	//@JsonIdentityReference(alwaysAsId = true)

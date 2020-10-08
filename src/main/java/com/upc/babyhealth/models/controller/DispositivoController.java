@@ -2,13 +2,13 @@ package com.upc.babyhealth.models.controller;
 
 import com.upc.babyhealth.models.entity.Dispositivo;
 import com.upc.babyhealth.models.entity.DispositivoX;
+import com.upc.babyhealth.models.entity.request.CapturaPostRequest;
 import com.upc.babyhealth.models.service.DispositivoService;
 import com.upc.babyhealth.models.service.DispositivoXService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -42,5 +42,8 @@ public class DispositivoController {
     }
 
 
-
+    @PostMapping("/dispositivos/{dispositivoId}/capturas")
+    public boolean sendCaptures(@PathVariable Long dispositivoId, @RequestBody List<CapturaPostRequest>capturas) {
+        return dispositivoXService.saveCaptures(capturas, dispositivoId);
+    }
 }

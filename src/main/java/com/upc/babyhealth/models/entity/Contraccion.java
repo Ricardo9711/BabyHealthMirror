@@ -35,7 +35,7 @@ public class Contraccion {
 	@Column(name ="ID_CONTRACCION")
 	private Long idContraccion;
 	@Column(name ="INTENSIDAD")
-	private Double intensidad; //valor mas alto de la contraccion (puede ser null, de acuerdo si tiene wearable o no)
+	private Double intensidad; //valor mas alto de la contraccion (puede ser 0, de acuerdo si tiene wearable o no)
 	@Column(name ="FECHA_INICIO")
 	private ZonedDateTime fechaInicio; //fecha de la primera captura de la contraccion
 	@Column(name ="FECHA_FIN")

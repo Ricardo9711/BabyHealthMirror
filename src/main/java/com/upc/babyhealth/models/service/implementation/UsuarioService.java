@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Column;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
@@ -103,7 +104,7 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
             newUser.setContrasenia(passwordEncoder.encode(signUpRequest.getNewUser().getContrasenia()));
             newUser.setUsuarioCreacion(signUpRequest.getNewUser().getUsuarioCreacion().toUpperCase());
             //setearle un fixed zone UTF-5
-            newUser.setFechaCreacion(ZonedDateTime.now());
+            newUser.setFechaCreacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
 
             //Asignacion y validacion del estado del usuario
             if (signUpRequest.getNewUser().getEstado() == null || signUpRequest.getNewUser().getEstado().toString() == ""){

@@ -29,7 +29,7 @@ public class GestanteService implements com.upc.babyhealth.models.service.Gestan
 	public Gestante save(Gestante gestante) {
 
 		//verificar si es que el usuario existe
-
+		gestante.setPatronMovimientos(0);
 		return gestanteRepo.save(gestante);
 	}
 

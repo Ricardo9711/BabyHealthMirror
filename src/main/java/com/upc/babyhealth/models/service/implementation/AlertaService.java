@@ -17,6 +17,7 @@ import com.upc.babyhealth.models.service.TipoAlertaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -45,15 +46,29 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         alerta.setTipoAlerta(tipoAlertaService.findByName(alertaRequest.getTipoAlerta()));
         alerta.setIntensidadMmhg(alertaRequest.getIntensidadMmhg());
         alerta.setUsuarioCreacion(alertaRequest.getUsuarioCreacion());
-        alerta.setFechaCreacion(ZonedDateTime.now());
+        alerta.setFechaCreacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
 
         //TODO NOTIFICATION
         //pushNotificationService.notifyAlert(alerta, alertaRequest.getGestanteToken(),alertaRequest.getObstetraToken());
-        this.sendSmsToFam(alerta);
+        if(alertaRequest.getTipoAlerta() != "MONITOREO")
+            this.sendSmsToFam(alerta);
 
         return alertaRepository.save(alerta);
     }
 
+    @Override
+    public Alerta seeAlert(Long id) {
+        Alerta existingAlert = alertaRepository.findById(id).orElse(null);
+        try{
+            if(existingAlert != null){
+                existingAlert.setFechaVisto(ZonedDateTime.now(ZoneId.of("America/Lima")));
+                alertaRepository.save(existingAlert);
+            }
+        }catch (Exception e){
+            return null;
+        }
+        return existingAlert;
+    }
 
 
     public boolean sendSmsToFam(Alerta alerta){

@@ -19,6 +19,6 @@ public class TipoAlertaService implements com.upc.babyhealth.models.service.Tipo
 
     @Override
     public List<TipoAlerta> findAll() {
-       return tipoAlertaRepository.findAllByIdTipoBetween(Long.valueOf(3), Long.valueOf(99999));
+       return tipoAlertaRepository.findAllByIdTipoBetween(Long.valueOf(4), Long.valueOf(99999));
     }
 }

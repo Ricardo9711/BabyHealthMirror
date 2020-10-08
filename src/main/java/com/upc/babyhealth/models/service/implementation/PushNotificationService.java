@@ -28,7 +28,7 @@ public class PushNotificationService {
         String title = "Alerta Baby Health";
         String bodyGestanteEmergency = "Mamita, me siento mal, comunícate con mi obstetra.";
         String bodyGestanteLabor = "¡Felicidades! Estás por conocer a tu bebé. Por favor, dirígete al Centro de Salud";
-        String bodyObstetraEmergency = "Se han identificado contracciones anormales para la gestante " + nombreGestante + ". Por favor, revisar monitoreo.";
+        String bodyObstetraEmergency = "Se han identificado parámetros anormales para la gestante " + nombreGestante + ". Por favor, revisar monitoreo.";
         String bodyObstetraLabor = "La gestante "+nombreGestante+" ha ingresado a labor de parto. Por favor realizar seguimiento.";
         String bodyGestante = "";
         String bodyObstetra = "";

@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class BabyhealthApplication {
 		for (RolEnum r: RolEnum.values()){
 			Rol rol = new Rol();
 			rol.setNombreRol(r);
-			rol.setFechaCreacion(ZonedDateTime.now());
+			rol.setFechaCreacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
 			rol.setUsuarioCreacion("MASTER");
 			if( rolRepository.findByNombreRol(rol.getNombreRol()) == null)
 				rolRepository.save(rol);
