@@ -19,10 +19,25 @@ public interface DispositivoXRepository extends JpaRepository<DispositivoX, Long
     List<DispositivoX> findCaptureByDispositivoIdAndDate(Long dispositivoId,String date);
 
     //@Query(value = "insert into dispositivo_?1 (evento,fecha_creacion,fecha_evento,id_dispositivo,usuario_creacion,valor_registrado) values (?2,?3 ?4 ?5,?6,?7)", nativeQuery = true)
+    /*
     @Transactional
     @Query(value = "insert into dispositivo_1  (evento,fecha_creacion,fecha_evento,id_dispositivo,usuario_creacion,valor_registrado) values (?1,?2 ?3 ?4,?5,?6))", nativeQuery = true)
     void save(Long dispositivoId, String evento, String fechaCreacion, String fechaEvento, Long dispositiovId2 , String usuarioCreacion, Double valorRegistrado );
+*/
+
+    @Transactional
+    @Query(
+            value = "insert into dispositivo_:dispositivoId (evento,fecha_creacion,fecha_evento,id_dispositivo,usuario_creacion,valor_registrado)"
+                    + "values (:evento, :fechaCreacion, :fechaEvento, :dispositiovId2, :usuarioCreacion, :valorRegistrado)",
+            nativeQuery = true)
+    void insertDispositivoX(@Param("dispositivoId") Long dispositivoId, @Param("evento") String evento,
+                            @Param("fechaCreacion") String fechaCreacion, @Param("fechaEvento") String fechaEvento,
+                            @Param("dispositiovId2") Long dispositiovId2 , @Param("usuarioCreacion") String usuarioCreacion,
+                            @Param("valorRegistrado") Double valorRegistrado);
 
     @Procedure
     void SP_NEW_TABLE_DISPOSITIVOX(Long dispositivoId);
+
+    @Procedure
+    void SP_INSERT_CAPTURA(Long dispositivoId, String evento, String fechaCreacion, String fechaEvento, String usuarioCreacion, Double valorRegistrado);
 }

@@ -8,4 +8,6 @@ import com.upc.babyhealth.models.entity.request.CelularPutRequest;
 public interface CelularService {
     public Celular insert(CelularPostRequest request);
     public Celular update(Long id, CelularPutRequest request);
+    public boolean changeState(Long usuarioId, Long activeId);
+    public Celular findActive(Long usuarioId);
 }

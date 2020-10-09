@@ -33,10 +33,10 @@ public class PushNotificationService {
         String bodyGestante = "";
         String bodyObstetra = "";
 
-        if(alerta.getTipoAlerta().getNombre().equals("Emergencia")){
+        if(alerta.getTipoAlerta().getNombre().equals("EMERGENCIA")){
             bodyGestante = bodyGestanteEmergency;
             bodyObstetra = bodyObstetraEmergency;
-        }else if(alerta.getTipoAlerta().getNombre().equals("Labor de Parto")){
+        }else if(alerta.getTipoAlerta().getNombre().equals("LABOR DE PARTO")){
             bodyGestante = bodyGestanteLabor;
             bodyObstetra = bodyObstetraLabor;
         }

@@ -10,10 +10,10 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CelularPostRequest {
-    private Long numero;
-    private Long imei;
+    private String numero;
+    private String imei;
     private String operador;
     private String usuarioCreacion;
-    private String estado;
     private String firebaseToken;
+    private Long idUsuario;
 }

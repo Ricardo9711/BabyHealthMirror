@@ -34,6 +34,8 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
     private TipoAlertaService tipoAlertaService;
     @Autowired
     private ContraccionService contraccionService;
+    @Autowired
+    private CelularService celularService;
 
     @Override
     public List<Monitoreo> findBySemanaAndGestante(Integer semana, Long gestanteId) {
@@ -153,6 +155,19 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     AlertaRequest a = new AlertaRequest();
                     a.setGestanteId(g.getId());
                     a.setUsuarioCreacion("MASTER");
+                    //obtener tokens
+                    //a partir de la gestante/obstetra (usuario) obtener el celular y luego el token
+                    Usuario uObst;
+                    Usuario uGest;
+                    uObst = o.getUsuario();
+                    uGest = g.getUsuario();
+                    Celular celGest = celularService.findActive(uGest.getIdUsuario());
+                    Celular celObst = celularService.findActive(uObst.getIdUsuario());
+                    a.setGestanteToken( celGest.getFirebaseToken());
+                    a.setObstetraToken( celObst.getFirebaseToken());
+
+                    a.setTipoAlerta("MONITOREO");
+                    existingMonitoreo.setEstadoGestante("ESTABLE");
 
                     if( (existingMonitoreo.getCantidadMovFetales() < g.getPatronMovimientos()) || !fine)  {
                         a.setTipoAlerta("EMERGENCIA");
@@ -163,7 +178,6 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                             //alertar emergencia
                             a.setTipoAlerta("EMERGENCIA");
                             existingMonitoreo.setEstadoGestante("EMERGENCIA");
-                            alertaService.sendAlert(a);
                         }
                     }
                     else if( semanas >= 30 ){
@@ -172,22 +186,15 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                             //alertar emergencia
                             a.setTipoAlerta("EMERGENCIA");
                             existingMonitoreo.setEstadoGestante("EMERGENCIA");
-                            alertaService.sendAlert(a);
                         }
                         else if(existingMonitoreo.getCantidadContracciones() > 5){
                             //alertar labor de parto
                             a.setTipoAlerta("LABOR DE PARTO");
                             existingMonitoreo.setEstadoGestante("LABOR DE PARTO");
-                            alertaService.sendAlert(a);
                         }
                     }
-                    else{
-                        //TODO MONITOREO ALERTA
-                        a.setTipoAlerta("MONITOREO");
-                        existingMonitoreo.setEstadoGestante("ESTABLE");
-                        alertaService.sendAlert(a);
-                    }
 
+                    alertaService.sendAlert(a);
                 }
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());
                 existingMonitoreo.setEstado(MonitoreoEstadoEnum.F);

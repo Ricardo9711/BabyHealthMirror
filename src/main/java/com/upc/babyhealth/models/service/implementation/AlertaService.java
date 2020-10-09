@@ -49,7 +49,7 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         alerta.setFechaCreacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
 
         //TODO NOTIFICATION
-        //pushNotificationService.notifyAlert(alerta, alertaRequest.getGestanteToken(),alertaRequest.getObstetraToken());
+        pushNotificationService.notifyAlert(alerta, alertaRequest.getGestanteToken(),alertaRequest.getObstetraToken());
         if(alertaRequest.getTipoAlerta() != "MONITOREO")
             this.sendSmsToFam(alerta);
 

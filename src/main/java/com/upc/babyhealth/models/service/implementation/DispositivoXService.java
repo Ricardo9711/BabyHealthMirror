@@ -29,7 +29,7 @@ public class DispositivoXService implements com.upc.babyhealth.models.service.Di
     }
 
     @Override
-    public boolean saveCaptures(List<CapturaPostRequest> captureRequests, Long idDispositivo){
+    public boolean saveCaptures(List<CapturaPostRequest> captureRequests, Long dispositivoId){
         for ( CapturaPostRequest captura: captureRequests) {
             /*
             DispositivoX capturaDisp = new DispositivoX();
@@ -46,8 +46,9 @@ public class DispositivoXService implements com.upc.babyhealth.models.service.Di
             String fechaEvento = captura.getFechaEvento().toString();
             String fechaCreacion = ZonedDateTime.now(ZoneId.of("America/Lima")).toString();
             try{
-                //dispositivoXRepository.save(idDispositivo,"AUTOREPLAY", fechaEvento, fechaCreacion,idDispositivo, "MASTER",captura.getValorRegistrado());
-                dispositivoXRepository.save(1L,"2020-09-21T13:33:20Z[UTC]", "2020-09-21T13:33:20Z[UTC]", "2020-09-21T13:33:20Z[UTC]",1L, "MASTER",9.99);
+                dispositivoXRepository.SP_INSERT_CAPTURA(dispositivoId,"AUTOREPLAY",fechaCreacion, fechaEvento,  "MASTER", captura.getValorRegistrado());
+                //dispositivoXRepository.insertDispositivoX(1L,"2020-09-21T13:33:20Z[UTC]", "2020-09-21T13:33:20Z[UTC]", "2020-09-21T13:33:20Z[UTC]",1L, "MASTER",9.99);
+
             }catch(Exception e){
                 return false;
             }

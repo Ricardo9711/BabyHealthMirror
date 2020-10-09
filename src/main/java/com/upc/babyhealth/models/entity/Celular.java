@@ -24,8 +24,8 @@ public class Celular {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long idCelular;
-	private Long numero;
-	private Long imei;
+	private String numero;
+	private String imei;
 	private String operador;
 	private ZonedDateTime fechaCreacion;
 	private ZonedDateTime fechaMoificacion;
@@ -33,5 +33,12 @@ public class Celular {
 	private String usuarioModificacion;
 	private String estado;
 	private String firebaseToken;
+
+
+	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
+	//@JsonIdentityReference(alwaysAsId = true)
+	@ManyToOne(optional=true)
+	@JoinColumn(name="FK_USUARIO", nullable=true)
+	private Usuario usuario;
 
 }
