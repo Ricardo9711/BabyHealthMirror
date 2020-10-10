@@ -48,9 +48,12 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         alerta.setUsuarioCreacion(alertaRequest.getUsuarioCreacion());
         alerta.setFechaCreacion(ZonedDateTime.now().minusHours(5));
 
-        //TODO NOTIFICATION
-        pushNotificationService.notifyAlert(alerta, alertaRequest.getGestanteToken(),alertaRequest.getObstetraToken());
-        if(alertaRequest.getTipoAlerta() != "MONITOREO")
+        if(alertaRequest.getTipoAlerta().equals("MONITOREO"))
+            pushNotificationService.notifyFinishedMonitoring(alertaRequest.getGestanteToken(),alertaRequest.getObstetraToken());
+        else
+            pushNotificationService.notifyAlert(alerta, alertaRequest.getGestanteToken(),alertaRequest.getObstetraToken());
+
+        if(!alertaRequest.getTipoAlerta().equals("MONITOREO"))
             this.sendSmsToFam(alerta);
 
         return alertaRepository.save(alerta);

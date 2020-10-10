@@ -98,6 +98,8 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
             if(monitoreoRequest.getUsuarioModificacion() != null && !monitoreoRequest.getUsuarioModificacion().equals(""))
                 existingMonitoreo.setUsuarioModificacion(monitoreoRequest.getUsuarioModificacion());
             if(monitoreoRequest.getFechaFin() != null && !monitoreoRequest.getFechaFin().toString().equals("")){
+
+                //si no se ha terminado, finalizar
                 if(existingMonitoreo.getFechaFin() == null){
                     //ya ha terminado el monitoreo
                     Gestante g = gestanteService.findOne(gestanteId);
@@ -135,7 +137,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                         intervaloPromedio += ChronoUnit.SECONDS.between(contracciones.get(i-1).getFechaFin(),contracciones.get(i).getFechaInicio());
                     }
                     if(contracciones.size() > 2){
-                        intervaloPromedio = intervaloPromedio / (contracciones.size() - 1);
+                        intervaloPromedio = ( intervaloPromedio / (contracciones.size() - 1) ) / 60;
                         intervaloPromedio = Math.round(intervaloPromedio*10.0)/(10.0);
                     }
                     existingMonitoreo.setTiempoEcPromedio(intervaloPromedio);
@@ -187,18 +189,19 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                             a.setTipoAlerta("EMERGENCIA");
                             existingMonitoreo.setEstadoGestante("EMERGENCIA");
                         }
-                        else if(existingMonitoreo.getCantidadContracciones() > 5){
+                        else if(existingMonitoreo.getCantidadContracciones() >= 5){
                             //alertar labor de parto
                             a.setTipoAlerta("LABOR DE PARTO");
                             existingMonitoreo.setEstadoGestante("LABOR DE PARTO");
                         }
                     }
 
+                    existingMonitoreo.setEstado(MonitoreoEstadoEnum.F);
                     alertaService.sendAlert(a);
                 }
+
+                //actualizar
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());
-                existingMonitoreo.setEstado(MonitoreoEstadoEnum.F);
-                existingMonitoreo.setEstadoGestante("ESTABLE");
                 existingMonitoreo.setFechaModificacion(ZonedDateTime.now().minusHours(5));
             }
 
