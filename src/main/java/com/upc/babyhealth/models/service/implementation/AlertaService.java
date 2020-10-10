@@ -46,7 +46,7 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         alerta.setTipoAlerta(tipoAlertaService.findByName(alertaRequest.getTipoAlerta()));
         alerta.setIntensidadMmhg(alertaRequest.getIntensidadMmhg());
         alerta.setUsuarioCreacion(alertaRequest.getUsuarioCreacion());
-        alerta.setFechaCreacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
+        alerta.setFechaCreacion(ZonedDateTime.now().minusHours(5));
 
         //TODO NOTIFICATION
         pushNotificationService.notifyAlert(alerta, alertaRequest.getGestanteToken(),alertaRequest.getObstetraToken());
@@ -61,7 +61,7 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         Alerta existingAlert = alertaRepository.findById(id).orElse(null);
         try{
             if(existingAlert != null){
-                existingAlert.setFechaVisto(ZonedDateTime.now(ZoneId.of("America/Lima")));
+                existingAlert.setFechaVisto(ZonedDateTime.now().minusHours(5));
                 alertaRepository.save(existingAlert);
             }
         }catch (Exception e){

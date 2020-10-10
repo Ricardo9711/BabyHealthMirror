@@ -36,7 +36,7 @@ public class BabyhealthApplication {
 		for (RolEnum r: RolEnum.values()){
 			Rol rol = new Rol();
 			rol.setNombreRol(r);
-			rol.setFechaCreacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
+			rol.setFechaCreacion(ZonedDateTime.now().minusHours(5));
 			rol.setUsuarioCreacion("MASTER");
 			if( rolRepository.findByNombreRol(rol.getNombreRol()) == null)
 				rolRepository.save(rol);

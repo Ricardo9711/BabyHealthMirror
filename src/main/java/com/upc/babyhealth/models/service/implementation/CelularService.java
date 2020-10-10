@@ -30,7 +30,7 @@ public class CelularService implements com.upc.babyhealth.models.service.Celular
         Celular c = new Celular();
         c = mapper.convertValue(request, Celular.class);
 
-        c.setFechaCreacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
+        c.setFechaCreacion(ZonedDateTime.now().minusHours(5));
         if(request.getIdUsuario() != null) {
             Usuario usuario = new Usuario();
             usuario.setIdUsuario(request.getIdUsuario());

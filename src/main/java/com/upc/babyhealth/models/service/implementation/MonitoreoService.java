@@ -71,7 +71,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
             //return new Exception();
         Monitoreo monitoreo = new Monitoreo();
         monitoreo.setGestante(gestante);
-        monitoreo.setFechaCreacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
+        monitoreo.setFechaCreacion(ZonedDateTime.now().minusHours(5));
         monitoreo.setFechaInicio(monitoreo.getFechaCreacion());
         monitoreo.setEstado(MonitoreoEstadoEnum.I);
         monitoreo.setUsuarioCreacion(monitoreoRequest.getUsuarioCreacion());
@@ -106,7 +106,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     boolean fine = true;
 
                     //Logica de monitoreos
-                    Long diff = ChronoUnit.DAYS.between(g.getFechaInicioGestacion(), ZonedDateTime.now(ZoneId.of("America/Lima")));
+                    Long diff = ChronoUnit.DAYS.between(g.getFechaInicioGestacion(), ZonedDateTime.now().minusHours(5));
                     Double semanas = Double.valueOf(diff)/7;
                     existingMonitoreo.setSemanaGestacion(semanas.intValue());
 
@@ -199,7 +199,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                 existingMonitoreo.setFechaFin(monitoreoRequest.getFechaFin());
                 existingMonitoreo.setEstado(MonitoreoEstadoEnum.F);
                 existingMonitoreo.setEstadoGestante("ESTABLE");
-                existingMonitoreo.setFechaModificacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
+                existingMonitoreo.setFechaModificacion(ZonedDateTime.now().minusHours(5));
             }
 
             return monitoreRepository.save(existingMonitoreo);

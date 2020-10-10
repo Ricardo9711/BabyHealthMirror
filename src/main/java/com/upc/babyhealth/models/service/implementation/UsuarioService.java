@@ -104,7 +104,7 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
             newUser.setContrasenia(passwordEncoder.encode(signUpRequest.getNewUser().getContrasenia()));
             newUser.setUsuarioCreacion(signUpRequest.getNewUser().getUsuarioCreacion().toUpperCase());
             //setearle un fixed zone UTF-5
-            newUser.setFechaCreacion(ZonedDateTime.now(ZoneId.of("America/Lima")));
+            newUser.setFechaCreacion(ZonedDateTime.now().minusHours(5));
 
             //Asignacion y validacion del estado del usuario
             if (signUpRequest.getNewUser().getEstado() == null || signUpRequest.getNewUser().getEstado().toString() == ""){
