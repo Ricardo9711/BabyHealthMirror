@@ -130,5 +130,10 @@ public class CelularService implements com.upc.babyhealth.models.service.Celular
             return null;
     }
 
+    @Override
+    public List<Celular> findByUsuarioId(Long usuarioId) {
+        return celularRepository.findByUsuario_IdUsuario(usuarioId);
+    }
+
 
 }

@@ -7,6 +7,8 @@ import com.upc.babyhealth.models.service.CelularService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class CelularController {
 
@@ -21,5 +23,10 @@ public class CelularController {
     @PutMapping("/celulares/{id}")
     Celular update(@PathVariable Long id, @RequestBody CelularPutRequest celularRequest) {
         return celularService.update(id, celularRequest);
+    }
+
+    @GetMapping("/usuarios/{id}/celulares")
+    List<Celular> find(@PathVariable Long id){
+        return celularService.findByUsuarioId(id);
     }
 }

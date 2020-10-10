@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CelularRepository extends JpaRepository<Celular, Long> {
     List<Celular> findByUsuario_IdUsuarioAndEstado(Long idUsuario, String estado);
+    List<Celular> findByUsuario_IdUsuario(Long idUsuario);
 }
