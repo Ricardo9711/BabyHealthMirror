@@ -24,5 +24,4 @@ public class AlertaController {
         return alertaService.seeAlert(id);
     }
 
-    //TODO PUT
 }

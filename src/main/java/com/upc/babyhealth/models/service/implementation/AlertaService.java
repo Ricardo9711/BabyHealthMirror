@@ -56,6 +56,12 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         if(!alertaRequest.getTipoAlerta().equals("MONITOREO"))
             this.sendSmsToFam(alerta);
 
+        //cambiar estado gestante
+        if(!alertaRequest.getTipoAlerta().equals("MONITOREO") && !alertaRequest.getTipoAlerta().equals("EMERGENCIA") && !alertaRequest.getTipoAlerta().equals("LABOR DE PARTO"))
+        {
+            gestante.setEstado("EMERGENCIA");
+            gestanteService.update(gestante);
+        }
         return alertaRepository.save(alerta);
     }
 
@@ -77,7 +83,7 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
     public boolean sendSmsToFam(Alerta alerta){
         String nombreGestante = alerta.getGestante().getNombres() +" "+alerta.getGestante().getApellidoPaterno() + " "+alerta.getGestante().getApellidoMaterno();
         String emergencyBody = "Su familiar "+nombreGestante+" ha tenido una emergencia";
-        String laborBody = "Su familiar "+nombreGestante+" está en labor de parto";
+        String laborBody = "Su familiar "+nombreGestante+" podría estar en labor de parto";
         List<Familiar> familiares = familiarService.findAllByGestante(alerta.getGestante().getId());
 
         String smsBody = "default message";

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PushNotificationService {
 
-    public Message createFirebaseMessage(String token, String title, String body){
+    public Message createFirebaseMessage(String token, String title, String body, Long idTipoAlerta){
         return Message.builder()
                 .setToken(token)
                 .setNotification(
@@ -19,6 +19,7 @@ public class PushNotificationService {
                 .putData("content",title)
                 .putData("body",body)
                 .putData("click_action", "FLUTTER_NOTIFICATION_CLICK")
+                .putData("idTipoAlerta", idTipoAlerta.toString())
                 .build();
 
     }
@@ -31,6 +32,7 @@ public class PushNotificationService {
         String bodyGestanteLabor = "¡Felicidades! Podrías estar por conocer a tu bebé. Por favor, dirígete al Centro de Salud";
         String bodyObstetraEmergency = "Se han identificado parámetros anormales para la gestante " + nombreGestante + ". Por favor, revisar monitoreo.";
         String bodyObstetraLabor = "La gestante "+nombreGestante+" podría haber ingresado a labor de parto. Por favor realizar seguimiento.";
+        String bodyObstetraOther = "La gestante "+nombreGestante+" presenta la siguiente emergencia: "+alerta.getTipoAlerta().getNombre().toLowerCase()+".";
         String bodyGestante = "";
         String bodyObstetra = "";
 
@@ -40,17 +42,24 @@ public class PushNotificationService {
         }else if(alerta.getTipoAlerta().getNombre().equals("LABOR DE PARTO")){
             bodyGestante = bodyGestanteLabor;
             bodyObstetra = bodyObstetraLabor;
+        }else{
+            bodyObstetra = bodyObstetraOther;
         }
 
-        Message messageObstetra = createFirebaseMessage(obstetraToken,title,bodyObstetra);
-        Message messageGestante = createFirebaseMessage(gestanteToken,title,bodyGestante);
+        Message messageObstetra = createFirebaseMessage(obstetraToken,title,bodyObstetra, alerta.getTipoAlerta().getIdTipo() );
+        Message messageGestante = createFirebaseMessage(gestanteToken,title,bodyGestante,alerta.getTipoAlerta().getIdTipo());
 
         String responseObstetra = null;
         String responseGestante = null;
         try{
             responseObstetra = FirebaseMessaging.getInstance().send(messageObstetra);
-            responseGestante = FirebaseMessaging.getInstance().send(messageGestante);
         } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+        }
+        try{
+            if(alerta.getTipoAlerta().getNombre().equals("EMERGENCIA") || alerta.getTipoAlerta().getNombre().equals("LABOR DE PARTO")   )
+                responseGestante = FirebaseMessaging.getInstance().send(messageGestante);
+        }catch (FirebaseMessagingException e){
             e.printStackTrace();
         }
         return true;
@@ -59,7 +68,7 @@ public class PushNotificationService {
     boolean notifyFinishedMonitoring(String obstetraToken, String nombreGestante){
         String title = "Baby Health";
         String body = "La gestante " + nombreGestante + " ha finalizado un monitoreo.";
-        Message messageGestante = createFirebaseMessage(obstetraToken,title,body);
+        Message messageGestante = createFirebaseMessage(obstetraToken,title,body, 0L);
 
         String response = null;
         try{

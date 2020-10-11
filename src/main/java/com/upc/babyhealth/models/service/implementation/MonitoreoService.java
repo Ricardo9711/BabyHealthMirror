@@ -101,6 +101,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
 
                 //si no se ha terminado, finalizar
                 if(existingMonitoreo.getFechaFin() == null){
+
                     //ya ha terminado el monitoreo
                     Gestante g = gestanteService.findOne(gestanteId);
                     String nombreGestante = g.getNombres()+" "+g.getApellidoPaterno()+" "+g.getApellidoMaterno();
@@ -157,6 +158,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     AlertaRequest a = new AlertaRequest();
                     a.setGestanteId(g.getId());
                     a.setUsuarioCreacion("MASTER");
+
                     //obtener tokens
                     //a partir de la gestante/obstetra (usuario) obtener el celular y luego el token
                     Usuario uObst;
