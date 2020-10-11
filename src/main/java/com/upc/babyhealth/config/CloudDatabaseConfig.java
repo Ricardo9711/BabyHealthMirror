@@ -23,9 +23,9 @@ public class CloudDatabaseConfig extends AbstractCloudConfig {
 		return DataSourceBuilder.create()
 				.type(HikariDataSource.class)
 				.driverClassName(com.sap.db.jdbc.Driver.class.getName())
-				.url("jdbc:sap://zeus.hana.prod.eu-central-1.whitney.dbaas.ondemand.com:23803?encrypt=true&validateCertificate=true&currentschema=USR_AIOACBT4W9DI5D1J7MVOAA7XV")
-				.username("USR_AIOACBT4W9DI5D1J7MVOAA7XV")
-				.password("Ix60cTJeeP6k8ZREh4Y.mqlmRv2STiQguZmkl_1fey5_kzBWOx2YTEGcryaJ7DXSnqf5wdS9r5uDvIBjjtMmYFF55LtaLCmpJGUMVIocHAO0hnjfk8ACBCc6Ip1nf.b-")
+				.url("jdbc:sap://534f8e40-5a9d-46cd-ad31-7247ebf38a5f.hana.trial-eu10.hanacloud.ondemand.com:443?encrypt=true&validateCertificate=true&currentschema=USR_BMSJMNBWF1VRMUEEZV6ZIXZ6O")
+				.username("USR_BMSJMNBWF1VRMUEEZV6ZIXZ6O")
+				.password("Nh5vA6RsAPtygG_4gg8aSmEM.mbNGXjfnHL0K6JuHhBrRxA3bgGUBry3xUtjbbPl-i6.rnVv5WnQaW5dz7m3.fhtPMbDQWiAIA6vqPhDsK7p2tpn5BwC3ahMntuNQJWy")
 				.build();
 
 	}

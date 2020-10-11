@@ -6,12 +6,17 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.upc.babyhealth.models.dao.AlertaRepository;
 import com.upc.babyhealth.models.entity.Alerta;
+import com.upc.babyhealth.models.entity.Celular;
 import com.upc.babyhealth.models.entity.Familiar;
 import com.upc.babyhealth.models.entity.Gestante;
+import com.upc.babyhealth.models.entity.Obstetra;
 import com.upc.babyhealth.models.entity.TipoAlerta;
+import com.upc.babyhealth.models.entity.Usuario;
 import com.upc.babyhealth.models.entity.request.AlertaRequest;
+import com.upc.babyhealth.models.service.CelularService;
 import com.upc.babyhealth.models.service.FamiliarService;
 import com.upc.babyhealth.models.service.GestanteService;
+import com.upc.babyhealth.models.service.ObstetraService;
 import com.upc.babyhealth.models.service.SmsService;
 import com.upc.babyhealth.models.service.TipoAlertaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,34 +40,61 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
     private TipoAlertaService tipoAlertaService;
     @Autowired
     private PushNotificationService pushNotificationService;
-
+    @Autowired
+    private ObstetraService obstetraService;
+    @Autowired
+    private CelularService celularService;
 
     @Override
     public Alerta sendAlert(AlertaRequest alertaRequest) {
         //Debe enviar push notifications a gestante y obstetra
         Alerta alerta = new Alerta();
         Gestante gestante = gestanteService.findOne(alertaRequest.getGestanteId());
+        Obstetra o = obstetraService.findById(gestante.getObstetra().getId());
+        
+        Usuario uObst;
+        Usuario uGest;
+        uObst = o.getUsuario();
+        uGest = gestante.getUsuario();
+        Celular celGest = celularService.findActive(uGest.getIdUsuario());
+        Celular celObst = celularService.findActive(uObst.getIdUsuario());
+        alertaRequest.setGestanteToken( celGest.getFirebaseToken());
+        alertaRequest.setObstetraToken( celObst.getFirebaseToken());
+        
+        //Se agrego el nombre completo de la gestante para el notifyFinishedMonitoring
+        String nombreGestante = gestante.getNombres()+gestante.getApellidoPaterno()+gestante.getApellidoMaterno();
+        
         alerta.setGestante(gestante);
         alerta.setTipoAlerta(tipoAlertaService.findByName(alertaRequest.getTipoAlerta()));
         alerta.setIntensidadMmhg(alertaRequest.getIntensidadMmhg());
         alerta.setUsuarioCreacion(alertaRequest.getUsuarioCreacion());
         alerta.setFechaCreacion(ZonedDateTime.now().minusHours(5));
+        
+        
+        Alerta alerta2 = alertaRepository.save(alerta);
+        
 
-        if(alertaRequest.getTipoAlerta().equals("MONITOREO"))
-            pushNotificationService.notifyFinishedMonitoring(alertaRequest.getGestanteToken(),alertaRequest.getObstetraToken());
-        else
-            pushNotificationService.notifyAlert(alerta, alertaRequest.getGestanteToken(),alertaRequest.getObstetraToken());
-
-        if(!alertaRequest.getTipoAlerta().equals("MONITOREO"))
-            this.sendSmsToFam(alerta);
-
-        //cambiar estado gestante
-        if(!alertaRequest.getTipoAlerta().equals("MONITOREO") && !alertaRequest.getTipoAlerta().equals("EMERGENCIA") && !alertaRequest.getTipoAlerta().equals("LABOR DE PARTO"))
+        if(alerta2!=null) 
         {
-            gestante.setEstado("EMERGENCIA");
-            gestanteService.update(gestante);
+			if (alertaRequest.getTipoAlerta().equals("MONITOREO"))
+				pushNotificationService.notifyFinishedMonitoring(alertaRequest.getObstetraToken(), nombreGestante,
+						alerta2.getIdAlerta(), gestante.getId());
+			else
+				pushNotificationService.notifyAlert(alerta2, alertaRequest.getGestanteToken(),
+						alertaRequest.getObstetraToken());
+
+			if (!alertaRequest.getTipoAlerta().equals("MONITOREO"))
+				this.sendSmsToFam(alerta);
+
+			// cambiar estado gestante
+			if (!alertaRequest.getTipoAlerta().equals("MONITOREO")
+					&& !alertaRequest.getTipoAlerta().equals("EMERGENCIA")
+					&& !alertaRequest.getTipoAlerta().equals("LABOR DE PARTO")) {
+				gestante.setEstado("EMERGENCIA");
+				gestanteService.update(gestante);
+			}
         }
-        return alertaRepository.save(alerta);
+        return alerta2;
     }
 
     @Override
