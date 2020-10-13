@@ -71,6 +71,8 @@ public class JwtUtil {
         }
 
         claims.put("AUTHORITIES_KEY", authentication.getAuthorities());
+        Usuario u = usuarioService.findByUsername(authentication.getName());
+        claims.put("AceptoTerminos", u.getAceptoTerminos().toString());
         //claims.put("User", usuarioService.findByUsername(authentication.getName()));
 
         return createToken(claims, authentication);

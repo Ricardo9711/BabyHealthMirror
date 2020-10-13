@@ -60,6 +60,8 @@ public class UsuarioService implements com.upc.babyhealth.models.service.Usuario
                 existingUser.setEmail(usuarioPutRequest.getEmail());
             if(usuarioPutRequest.getNroCelular()!=null && !usuarioPutRequest.getNroCelular().equals(""))
                 existingUser.setNroCelular(usuarioPutRequest.getNroCelular());
+            if(usuarioPutRequest.getAceptoTerminos() != null && !usuarioPutRequest.getAceptoTerminos().toString().equals("")  )
+                existingUser.setAceptoTerminos(usuarioPutRequest.getAceptoTerminos());
             return usuarioRepository.save(existingUser);
         }
         return existingUser;

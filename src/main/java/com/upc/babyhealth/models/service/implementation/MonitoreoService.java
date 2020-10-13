@@ -78,6 +78,12 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
         monitoreo.setCantidadMovFetales(0);
         monitoreo.setCantidadContracciones(0);
 
+        //Inicializar los promedios
+        monitoreo.setDuracionPromedio(0.0);
+        monitoreo.setFrecuenciaPromedio(0.0);
+        monitoreo.setIntensidadPromedio(0.0);
+        monitoreo.setTiempoEcPromedio(0.0);
+
         return monitoreRepository.save(monitoreo);
     }
 
