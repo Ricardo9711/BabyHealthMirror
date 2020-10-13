@@ -78,7 +78,7 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         {
 			if (alertaRequest.getTipoAlerta().equals("MONITOREO"))
 				pushNotificationService.notifyFinishedMonitoring(alertaRequest.getObstetraToken(), nombreGestante,
-						alerta2.getIdAlerta(), gestante.getId());
+						alerta2.getIdAlerta(), gestante.getId(),alertaRequest.getTipoAlerta());
 			else
 				pushNotificationService.notifyAlert(alerta2, alertaRequest.getGestanteToken(),
 						alertaRequest.getObstetraToken());

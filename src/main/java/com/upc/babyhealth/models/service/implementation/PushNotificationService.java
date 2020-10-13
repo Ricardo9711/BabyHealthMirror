@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PushNotificationService {
 
-    public Message createFirebaseMessage(String token, String title, String body, Long idAlerta, Long idGestante){
+    public Message createFirebaseMessage(String token, String title, String body, Long idAlerta, Long idGestante, String tipoAlerta){
         return Message.builder()
                 .setToken(token)
                 .setNotification(
@@ -21,6 +21,7 @@ public class PushNotificationService {
                 .putData("click_action", "FLUTTER_NOTIFICATION_CLICK")
                 .putData("idAlerta", idAlerta.toString())
                 .putData("idGestante", idGestante.toString())
+                .putData("tipoAlerta", tipoAlerta)
                 .build();
 
     }
@@ -47,8 +48,8 @@ public class PushNotificationService {
             bodyObstetra = bodyObstetraOther;
         }
 
-        Message messageObstetra = createFirebaseMessage(obstetraToken,title,bodyObstetra, alerta.getIdAlerta(),alerta.getGestante().getId());
-        Message messageGestante = createFirebaseMessage(gestanteToken,title,bodyGestante,alerta.getIdAlerta(),alerta.getGestante().getId());
+        Message messageObstetra = createFirebaseMessage(obstetraToken,title,bodyObstetra, alerta.getIdAlerta(),alerta.getGestante().getId(), alerta.getTipoAlerta().getNombre());
+        Message messageGestante = createFirebaseMessage(gestanteToken,title,bodyGestante,alerta.getIdAlerta(),alerta.getGestante().getId(),alerta.getTipoAlerta().getNombre());
 
         String responseObstetra = null;
         String responseGestante = null;
@@ -66,10 +67,10 @@ public class PushNotificationService {
         return true;
     }
 
-    boolean notifyFinishedMonitoring(String obstetraToken, String nombreGestante, Long idAlerta, Long idGestante){
+    boolean notifyFinishedMonitoring(String obstetraToken, String nombreGestante, Long idAlerta, Long idGestante, String tipoAlerta){
         String title = "Baby Health";
         String body = "La gestante " + nombreGestante + " ha finalizado un monitoreo.";
-        Message messageGestante = createFirebaseMessage(obstetraToken,title,body, idAlerta,idGestante);
+        Message messageGestante = createFirebaseMessage(obstetraToken,title,body, idAlerta,idGestante, tipoAlerta);
 
         String response = null;
         try{
