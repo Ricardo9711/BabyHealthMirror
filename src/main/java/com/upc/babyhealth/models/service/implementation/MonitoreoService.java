@@ -137,7 +137,7 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     for(int i = 1; i < contracciones.size(); i++){
                         intervaloPromedio += ChronoUnit.SECONDS.between(contracciones.get(i-1).getFechaFin(),contracciones.get(i).getFechaInicio());
                     }
-                    if(contracciones.size() > 2){
+                    if(contracciones.size() >= 2){
                         intervaloPromedio = ( intervaloPromedio / (contracciones.size() - 1) ) / 60;
                         intervaloPromedio = Math.round(intervaloPromedio*10.0)/(10.0);
                     }
