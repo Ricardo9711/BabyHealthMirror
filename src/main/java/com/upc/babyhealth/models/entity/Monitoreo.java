@@ -42,6 +42,9 @@ public class Monitoreo {
 	private Integer cantidadMovFetales;
 	private Integer cantidadContracciones;
 	private String estadoGestante;
+	private String motivoCambio;
+	private String sustentoCambio;
+
 
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)
@@ -49,5 +52,10 @@ public class Monitoreo {
 	@JoinColumn(name="FK_GESTANTE", nullable=false)
 	private Gestante gestante;
 
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idAlerta")
+	@JsonIdentityReference(alwaysAsId = true)
+	@OneToOne
+	@JoinColumn(name="FK_ALERTA")
+	private Alerta alerta;
 
 }

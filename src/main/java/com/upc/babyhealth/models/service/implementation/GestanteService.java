@@ -71,6 +71,17 @@ public class GestanteService implements com.upc.babyhealth.models.service.Gestan
 		return gestanteRepo.save(nuevaGestante);
 	}
 
+	public Gestante estabilizarGestante(Long gestanteId){
+
+		Gestante g = gestanteRepo.findById(gestanteId).orElse(null);
+		if(g != null){
+			g.setEstado("ESTABLE");
+			g.setOrigenEstado("MANUAL");
+			g = gestanteRepo.save(g);
+		}
+		return g;
+	}
+
 
 
 

@@ -12,6 +12,7 @@ import com.upc.babyhealth.models.entity.Gestante;
 import com.upc.babyhealth.models.service.implementation.GestanteService;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 
 
 @RestController
@@ -62,7 +63,10 @@ public class GestanteController {
 		return gestanteService.findAllByObstetra(id);
 	}
 
-
+	@PostMapping("/gestantes/{id}/estado")
+	Gestante cambiarEstado(@PathVariable Long id){
+		return gestanteService.estabilizarGestante(id);
+	}
 
 
 }

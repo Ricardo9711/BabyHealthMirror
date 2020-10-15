@@ -103,6 +103,10 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                 existingMonitoreo.setFechaModificacion(monitoreoRequest.getFechaModificacion());
             if(monitoreoRequest.getUsuarioModificacion() != null && !monitoreoRequest.getUsuarioModificacion().equals(""))
                 existingMonitoreo.setUsuarioModificacion(monitoreoRequest.getUsuarioModificacion());
+            if(monitoreoRequest.getMotivoCambio()!=null && !monitoreoRequest.getMotivoCambio().equals(""))
+                existingMonitoreo.setMotivoCambio(monitoreoRequest.getMotivoCambio());
+            if(monitoreoRequest.getSustentoCambio()!=null && !monitoreoRequest.getSustentoCambio().equals(""))
+                existingMonitoreo.setSustentoCambio(monitoreoRequest.getSustentoCambio());
             if(monitoreoRequest.getFechaFin() != null && !monitoreoRequest.getFechaFin().toString().equals("")){
 
                 //si no se ha terminado, finalizar
@@ -205,7 +209,12 @@ public class MonitoreoService implements com.upc.babyhealth.models.service.Monit
                     }
 
                     existingMonitoreo.setEstado(MonitoreoEstadoEnum.F);
-                    alertaService.sendAlert(a);
+                    Alerta newAlert = alertaService.sendAlert(a);
+                    existingMonitoreo.setAlerta(newAlert);
+
+                    g.setEstado(existingMonitoreo.getEstadoGestante());
+                    g.setOrigenEstado("MONITOREO");
+                    gestanteService.save(g);
                 }
 
                 //actualizar

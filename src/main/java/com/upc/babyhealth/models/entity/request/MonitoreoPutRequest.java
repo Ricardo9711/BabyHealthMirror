@@ -21,4 +21,6 @@ public class MonitoreoPutRequest {
     private Integer semanaGestacion; //semana de gestacion del monitoreo
     private String usuarioModificacion;
     private Integer cantidadMovFetales;
+    private String motivoCambio;
+    private String sustentoCambio;
 }

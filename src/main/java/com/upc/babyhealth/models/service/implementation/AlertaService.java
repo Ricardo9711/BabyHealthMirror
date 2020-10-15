@@ -69,13 +69,14 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         alerta.setIntensidadMmhg(alertaRequest.getIntensidadMmhg());
         alerta.setUsuarioCreacion(alertaRequest.getUsuarioCreacion());
         alerta.setFechaCreacion(ZonedDateTime.now().minusHours(5));
-        
+
         
         Alerta alerta2 = alertaRepository.save(alerta);
-        
+
 
         if(alerta2!=null) 
         {
+            //mandar alerta de finalizacion de monitoreo
 			if (alertaRequest.getTipoAlerta().equals("MONITOREO"))
 				pushNotificationService.notifyFinishedMonitoring(alertaRequest.getObstetraToken(), nombreGestante,
 						alerta2.getIdAlerta(), gestante.getId(),alertaRequest.getTipoAlerta());
@@ -83,16 +84,20 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
 				pushNotificationService.notifyAlert(alerta2, alertaRequest.getGestanteToken(),
 						alertaRequest.getObstetraToken());
 
+			//mandar SMS a familiares solo si es un tipo de alerta diferente de monitoreo
 			if (!alertaRequest.getTipoAlerta().equals("MONITOREO"))
 				this.sendSmsToFam(alerta);
 
-			// cambiar estado gestante
+
+			// cambiar estado gestante cuando es del boton
 			if (!alertaRequest.getTipoAlerta().equals("MONITOREO")
 					&& !alertaRequest.getTipoAlerta().equals("EMERGENCIA")
 					&& !alertaRequest.getTipoAlerta().equals("LABOR DE PARTO")) {
 				gestante.setEstado("EMERGENCIA");
-				gestanteService.update(gestante);
+				gestante.setOrigenEstado("MANUAL");
+                gestanteService.update(gestante);
 			}
+
         }
         return alerta2;
     }

@@ -21,5 +21,4 @@ public class AlertaRequest {
     private Long gestanteId;
     private String gestanteToken;
     private String obstetraToken;
-
 }
