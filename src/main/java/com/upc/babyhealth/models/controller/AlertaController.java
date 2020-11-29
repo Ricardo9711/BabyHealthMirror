@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.ws.rs.Path;
 
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT})
 public class AlertaController {
 
     @Autowired
@@ -22,6 +23,11 @@ public class AlertaController {
     @PutMapping("/alertas/{id}/visualizacion")
     public Alerta update(@PathVariable Long id){
         return alertaService.seeAlert(id);
+    }
+    
+    @GetMapping("/alertas/{idGestante}/last")
+    public Alerta getLastAlertaByGestanteAndFechaVistoIsNull(@PathVariable Long idGestante){
+        return alertaService.findTopByGestanteAndFechaVistoIsNullOrderByFechaCreacionDesc(idGestante);
     }
 
 }

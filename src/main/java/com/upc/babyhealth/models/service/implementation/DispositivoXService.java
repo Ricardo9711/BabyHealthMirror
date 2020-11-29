@@ -9,6 +9,7 @@ import com.upc.babyhealth.models.entity.request.CapturaPostRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -16,44 +17,52 @@ import java.util.List;
 @Service
 public class DispositivoXService implements com.upc.babyhealth.models.service.DispositivoXService {
 
-    @Autowired
-    private DispositivoXRepository dispositivoXRepository;
+	@Autowired
+	private DispositivoXRepository dispositivoXRepository;
 
-    @Override
-    public List<DispositivoX> findByIdAndDate(Long dispositivoId, String fecha, String hora) {
-        String fechaYHora = fecha + " " + hora;
-        //String tableName = "DISPOSITIVO_" + dispositivoId.toString();
+	@Override
+	public List<DispositivoX> findByIdAndDate(Long dispositivoId, String fecha, String hora) {
+		String fechaYHora = fecha + " " + hora;
+		// String tableName = "DISPOSITIVO_" + dispositivoId.toString();
 
-        //return dispositivoXRepository.findCaptureByDispositivoIdAndDate(tableName,fechaYHora);
-        return dispositivoXRepository.findCaptureByDispositivoIdAndDate(dispositivoId,fechaYHora);
-    }
+		// return
+		// dispositivoXRepository.findCaptureByDispositivoIdAndDate(tableName,fechaYHora);
+		return dispositivoXRepository.findCaptureByDispositivoIdAndDate(dispositivoId, fechaYHora);
+	}
 
-    @Override
-    public boolean saveCaptures(List<CapturaPostRequest> captureRequests, Long dispositivoId){
-        for ( CapturaPostRequest captura: captureRequests) {
-            /*
-            DispositivoX capturaDisp = new DispositivoX();
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule());
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            capturaDisp = mapper.convertValue(captura, DispositivoX.class);
-            capturaDisp.setIdDispositivo(idDispositivo);
-            capturaDisp.setEvento("AUTOREPLAY");
-            capturaDisp.setFechaCreacion(ZonedDateTime.now());
-            capturaDisp.setUsuarioCreacion("MASTER");
-             */
+	@Override
+	public boolean saveCaptures(List<CapturaPostRequest> captureRequests, Long dispositivoId) {
+		for (CapturaPostRequest captura : captureRequests) {
+			/*
+			 * DispositivoX capturaDisp = new DispositivoX(); ObjectMapper mapper = new
+			 * ObjectMapper(); mapper.registerModule(new JavaTimeModule());
+			 * mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			 * capturaDisp = mapper.convertValue(captura, DispositivoX.class);
+			 * capturaDisp.setIdDispositivo(idDispositivo);
+			 * capturaDisp.setEvento("AUTOREPLAY");
+			 * capturaDisp.setFechaCreacion(ZonedDateTime.now());
+			 * capturaDisp.setUsuarioCreacion("MASTER");
+			 */
 
-            String fechaEvento = captura.getFechaEvento().toString();
-            String fechaCreacion = ZonedDateTime.now().minusHours(5).toString();
-            try{
-                dispositivoXRepository.SP_INSERT_CAPTURA(dispositivoId,"AUTOREPLAY",fechaCreacion, fechaEvento,  "MASTER", captura.getValorRegistrado());
-                //dispositivoXRepository.insertDispositivoX(1L,"2020-09-21T13:33:20Z[UTC]", "2020-09-21T13:33:20Z[UTC]", "2020-09-21T13:33:20Z[UTC]",1L, "MASTER",9.99);
+			String fechaEvento = captura.getFechaEvento().toLocalDateTime().toString();
 
-            }catch(Exception e){
-                return false;
-            }
+			// String fechaCreacion = ZonedDateTime.now().minusHours(5).toString();
+			String fechaCreacion = LocalDateTime.now().minusHours(5).toString();
 
-        }
-        return true;
-    }
+			System.out.println(captura.getFechaEvento().toLocalDateTime().toString());
+			System.out.println(fechaEvento);
+			System.out.println(fechaCreacion);
+			try {
+				dispositivoXRepository.SP_INSERT_CAPTURA(dispositivoId, "AUTOREPLAY", fechaCreacion, fechaEvento,
+						"MASTER", captura.getValorRegistrado());
+				// dispositivoXRepository.insertDispositivoX(1L,"2020-09-21T13:33:20Z[UTC]",
+				// "2020-09-21T13:33:20Z[UTC]", "2020-09-21T13:33:20Z[UTC]",1L, "MASTER",9.99);
+
+			} catch (Exception e) {
+				return false;
+			}
+
+		}
+		return true;
+	}
 }

@@ -62,7 +62,7 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
         alertaRequest.setObstetraToken( celObst.getFirebaseToken());
         
         //Se agrego el nombre completo de la gestante para el notifyFinishedMonitoring
-        String nombreGestante = gestante.getNombres()+gestante.getApellidoPaterno()+gestante.getApellidoMaterno();
+        String nombreGestante = gestante.getNombres()+" "+gestante.getApellidoPaterno()+" "+gestante.getApellidoMaterno();
         
         alerta.setGestante(gestante);
         alerta.setTipoAlerta(tipoAlertaService.findByName(alertaRequest.getTipoAlerta()));
@@ -136,4 +136,9 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
 
         return true;
     }
+
+	@Override
+	public Alerta findTopByGestanteAndFechaVistoIsNullOrderByFechaCreacionDesc(Long idGestante) {
+		return alertaRepository.findTopByGestanteAndFechaVistoIsNullOrderByFechaCreacionDesc(idGestante);
+	}
 }
