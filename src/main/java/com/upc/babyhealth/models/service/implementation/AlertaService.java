@@ -28,6 +28,7 @@ import java.util.List;
 
 @Service
 public class AlertaService implements com.upc.babyhealth.models.service.AlertaService {
+
     @Autowired
     private AlertaRepository alertaRepository;
     @Autowired
@@ -139,6 +140,13 @@ public class AlertaService implements com.upc.babyhealth.models.service.AlertaSe
 
 	@Override
 	public Alerta findTopByGestanteAndFechaVistoIsNullOrderByFechaCreacionDesc(Long idGestante) {
-		return alertaRepository.findTopByGestanteAndFechaVistoIsNullOrderByFechaCreacionDesc(idGestante);
+		return alertaRepository.findTopByGestante_IdAndFechaVistoIsNullOrderByFechaCreacionDesc(idGestante);
 	}
+
+    @Override
+    public List<Alerta> findAlertasByGestanteId(Long idGestante) {
+        return alertaRepository.findAlertasByGestante_Id(idGestante);
+    }
+
+
 }

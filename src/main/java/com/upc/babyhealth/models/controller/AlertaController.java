@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Path;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT})
@@ -28,6 +29,11 @@ public class AlertaController {
     @GetMapping("/alertas/{idGestante}/last")
     public Alerta getLastAlertaByGestanteAndFechaVistoIsNull(@PathVariable Long idGestante){
         return alertaService.findTopByGestanteAndFechaVistoIsNullOrderByFechaCreacionDesc(idGestante);
+    }
+
+    @GetMapping("/alertas/{idGestante}")
+    public List<Alerta> getAlertaByGestante(@PathVariable Long idGestante){
+        return alertaService.findAlertasByGestanteId(idGestante);
     }
 
 }
